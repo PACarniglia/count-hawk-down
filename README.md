@@ -9,13 +9,17 @@ Fast-start template for a Godot game jam team using Git.
   - LF line endings for consistency across Windows/macOS/Linux.
   - Text-friendly handling for Godot scene/resource text files.
   - Optional commented Git LFS patterns for large binary assets.
+- `.github/ISSUE_TEMPLATE/jam-task.md` to standardize jam tasks/bugs/features.
+- `.github/ISSUE_TEMPLATE/config.yml` with blank issues disabled so the team uses the template.
 
-## Host setup (do this before 1pm)
+## Host setup
 
 1. Create a remote repo from this template (or push this folder as a new repo).
 2. Confirm these files exist in the root:
    - `.gitignore`
    - `.gitattributes`
+  - `.github/ISSUE_TEMPLATE/jam-task.md`
+  - `.github/ISSUE_TEMPLATE/config.yml`
 3. On your machine, set Git line endings (recommended on Windows):
 
 ```bash
@@ -38,12 +42,74 @@ If you use GitHub CLI, you can create it quickly:
 gh label create jam-task --color 0E8A16 --description "Game jam task"
 ```
 
+## Jam start flow (fork and rename)
+
+When the jam starts, create a new repo from this template and name it after your actual jam game/team.
+
+Option A (GitHub website):
+
+1. Open this template repo.
+2. Click **Fork**.
+3. Rename the fork to your jam project name.
+4. Make sure the fork visibility/settings are what your team needs.
+
+Option B (GitHub CLI):
+
+```bash
+gh repo fork <template-owner>/godot-proj-git-template --clone=false --remote=false
+```
+
+Then rename the fork in GitHub settings, or create a new repo and push this template into it.
+
+## First-time setup in the new fork
+
+Do these once in the newly forked/renamed repo.
+
+1. Ensure required label exists in the new fork:
+
+```bash
+gh label create jam-task --color 0E8A16 --description "Game jam task" || true
+```
+
+2. Clone the new fork and enter it:
+
+```bash
+git clone <your-new-fork-url>
+cd <your-new-fork-folder>
+```
+
+3. Set line endings once (Windows):
+
+```bash
+git config --global core.autocrlf input
+```
+
+4. If the repo uses LFS:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+5. Open the forked project in Godot 4.7.1 LTS.
+6. Let Godot initialize project-local data.
+7. Run `git status`.
+8. Commit only intentional starter project files for the team (scenes, scripts, assets, project settings).
+9. Do not commit generated local cache under `.godot/` (already ignored).
+10. Push `main` so everyone else starts from the same baseline:
+
+```bash
+git add .
+git commit -m "Initialize jam project baseline"
+git push -u origin main
+```
+
 ## Team member setup (5 minutes)
 
 1. Install:
-  - Git
-  - Godot 4.7.1 LTS (same exact version for everyone)
-  - Git LFS (if the project uses it)
+   - Git
+   - Godot 4.7.1 LTS (same exact version for everyone)
+   - Git LFS (if the project uses it)
 2. Clone the repo:
 
 ```bash

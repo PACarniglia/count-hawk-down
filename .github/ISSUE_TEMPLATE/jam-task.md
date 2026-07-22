@@ -9,9 +9,6 @@ assignees: []
 ## Summary
 One sentence describing the task.
 
-## Engine Version
-- [ ] Confirmed on Godot 4.7.1 LTS
-
 ## Type
 - [ ] Feature
 - [ ] Bug
@@ -19,21 +16,6 @@ One sentence describing the task.
 - [ ] Audio
 - [ ] UI/UX
 - [ ] Tech/Tools
-
-## Goal / Why
-What player impact or team value does this deliver?
-
-## Scope
-What is included in this task?
-
-## Acceptance Criteria
-- [ ] Criterion 1
-- [ ] Criterion 2
-
-## Steps
-1. 
-2. 
-3. 
 
 ## Owner
 Who is taking this?
@@ -43,14 +25,8 @@ Who is taking this?
 - [ ] P1 (important)
 - [ ] P2 (nice to have)
 
-## Estimate
-- [ ] <= 30 min
-- [ ] 30-90 min
-- [ ] 2-4 hours
-- [ ] > 4 hours
-
-## Dependencies / Blockers
-Anything this depends on or currently blocked by.
+## Done When
+One line: how we know this is complete.
 
 ## Notes / Links
-Relevant PRs, screenshots, recordings, references.
+Optional: blockers, links, screenshots, references.
