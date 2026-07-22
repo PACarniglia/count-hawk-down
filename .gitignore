@@ -1,0 +1,15 @@
+# Godot 4.1+ generated cache and imports
+.godot/
+
+# Imported translation binaries generated from CSV
+*.translation
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# Optional: keep this tracked only if your team intentionally shares export presets.
+# For Godot 4.1+, this file no longer stores export credentials.
+# export_presets.cfg
