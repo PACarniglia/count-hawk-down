@@ -53,23 +53,6 @@ git lfs pull
 - Open pull requests into `main` instead of direct pushes.
 - Pull latest `main` before opening Godot each day.
 
-## Branch naming lint (for 4-person team)
-
-- Pull requests to `main` run `.github/workflows/branch-name-check.yml`.
-- Allowed branch names:
-  - `feat/<name>`
-  - `fix/<name>`
-  - `chore/<name>`
-  - `hotfix/<name>`
-
-Set GitHub branch protection to use this check:
-
-1. Go to **Settings > Branches > Add branch protection rule**.
-2. Rule pattern: `main`.
-3. Enable **Require a pull request before merging**.
-4. Enable **Require status checks to pass before merging**.
-5. Select check: **Branch Name Check / validate-branch-name**.
-
 ## Quick command cheat sheet
 
 ```bash
@@ -108,7 +91,50 @@ git config --global core.autocrlf input
 git lfs install
 ```
 
-5. If using LFS, uncomment the file types you need in `.gitattributes`, then commit.
+5. If using LFS, uncomment the file types you need in `.gitattributes`, then commit. The example provided in the Godot VCS documentation uses the following commonly used config:
+```bash
+# Normalize EOL for all files that Git considers text files.
+* text=auto eol=lf
+
+# Git LFS Tracking (Assets)
+
+# 3D Models
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.gltf filter=lfs diff=lfs merge=lfs -text
+*.glb filter=lfs diff=lfs merge=lfs -text
+*.blend filter=lfs diff=lfs merge=lfs -text
+*.obj filter=lfs diff=lfs merge=lfs -text
+
+# Images
+*.png filter=lfs diff=lfs merge=lfs -text
+*.svg filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.webp filter=lfs diff=lfs merge=lfs -text
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.hdr filter=lfs diff=lfs merge=lfs -text
+*.dds filter=lfs diff=lfs merge=lfs -text
+
+# Audio
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+
+# Font & Icon
+*.ttf filter=lfs diff=lfs merge=lfs -text
+*.otf filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
+
+# Godot LFS Specific
+*.scn filter=lfs diff=lfs merge=lfs -text
+*.res filter=lfs diff=lfs merge=lfs -text
+*.material filter=lfs diff=lfs merge=lfs -text
+*.anim filter=lfs diff=lfs merge=lfs -text
+*.mesh filter=lfs diff=lfs merge=lfs -text
+*.lmbake filter=lfs diff=lfs merge=lfs -text
+```
 6. Push `main` and protect it if your host supports branch protection.
 7. In GitHub, create a repository label named `jam-task` so the issue template label resolves correctly.
 
@@ -179,6 +205,23 @@ git add .
 git commit -m "Initialize jam project baseline"
 git push -u origin main
 ```
+
+## Branch naming lint (for 4-person team)
+
+- Pull requests to `main` run `.github/workflows/branch-name-check.yml`.
+- Allowed branch names:
+  - `feat/<name>`
+  - `fix/<name>`
+  - `chore/<name>`
+  - `hotfix/<name>`
+
+Set GitHub branch protection to use this check:
+
+1. Go to **Settings > Branches > Add branch protection rule**.
+2. Rule pattern: `main`.
+3. Enable **Require a pull request before merging**.
+4. Enable **Require status checks to pass before merging**.
+5. Select check: **Branch Name Check / validate-branch-name**.
 
 ## Notes for Godot versions
 
