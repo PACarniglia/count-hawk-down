@@ -11,7 +11,82 @@ Fast-start template for a Godot game jam team using Git.
   - Optional commented Git LFS patterns for large binary assets.
 - `.github/ISSUE_TEMPLATE/jam-task.md` to standardize jam tasks/bugs/features.
 - `.github/ISSUE_TEMPLATE/config.yml` with blank issues disabled so the team uses the template.
+- `.github/workflows/branch-name-check.yml` to enforce branch naming on PRs to `main`.
 
+## Contributing
+
+1. Install:
+   - Git
+   - Godot 4.7.1 LTS (same exact version for everyone)
+   - Git LFS (if the project uses it)
+2. Clone the repo:
+
+```bash
+git clone <your-repo-url>
+cd <repo-folder>
+```
+
+3. Set line endings once (Windows):
+
+```bash
+git config --global core.autocrlf input
+```
+
+4. If project uses LFS:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+5. Open the project in Godot.
+6. First run may generate local cache under `.godot/` (already ignored).
+
+## Recommended Workflow
+
+- Create short-lived branches per feature/fix:
+  - `feat/player-dash`
+  - `fix/menu-audio`
+  - `chore/repo-cleanup`
+  - `hotfix/critical-crash`
+- Keep commits small and descriptive.
+- Open pull requests into `main` instead of direct pushes.
+- Pull latest `main` before opening Godot each day.
+
+## Branch naming lint (for 4-person team)
+
+- Pull requests to `main` run `.github/workflows/branch-name-check.yml`.
+- Allowed branch names:
+  - `feat/<name>`
+  - `fix/<name>`
+  - `chore/<name>`
+  - `hotfix/<name>`
+
+Set GitHub branch protection to use this check:
+
+1. Go to **Settings > Branches > Add branch protection rule**.
+2. Rule pattern: `main`.
+3. Enable **Require a pull request before merging**.
+4. Enable **Require status checks to pass before merging**.
+5. Select check: **Branch Name Check / validate-branch-name**.
+
+## Quick command cheat sheet
+
+```bash
+# Start a branch
+git checkout -b feat/my-change
+
+# See what changed
+git status
+
+# Stage + commit
+git add .
+git commit -m "Add basic enemy patrol"
+
+# Push branch
+git push -u origin feat/my-change
+```
+---------
 ## Host setup
 
 1. Create a remote repo from this template (or push this folder as a new repo).
@@ -20,6 +95,7 @@ Fast-start template for a Godot game jam team using Git.
    - `.gitattributes`
   - `.github/ISSUE_TEMPLATE/jam-task.md`
   - `.github/ISSUE_TEMPLATE/config.yml`
+  - `.github/workflows/branch-name-check.yml`
 3. On your machine, set Git line endings (recommended on Windows):
 
 ```bash
@@ -102,61 +178,6 @@ git lfs pull
 git add .
 git commit -m "Initialize jam project baseline"
 git push -u origin main
-```
-
-## Team member setup (5 minutes)
-
-1. Install:
-   - Git
-   - Godot 4.7.1 LTS (same exact version for everyone)
-   - Git LFS (if the project uses it)
-2. Clone the repo:
-
-```bash
-git clone <your-repo-url>
-cd <repo-folder>
-```
-
-3. Set line endings once (Windows):
-
-```bash
-git config --global core.autocrlf input
-```
-
-4. If project uses LFS:
-
-```bash
-git lfs install
-git lfs pull
-```
-
-5. Open the project in Godot.
-6. First run may generate local cache under `.godot/` (already ignored).
-
-## Jam workflow (recommended)
-
-- Create short-lived branches per feature/fix:
-  - `feat/player-dash`
-  - `fix/menu-audio`
-- Keep commits small and descriptive.
-- Open pull requests into `main` instead of direct pushes.
-- Pull latest `main` before opening Godot each day.
-
-## Quick command cheat sheet
-
-```bash
-# Start a branch
-git checkout -b feat/my-change
-
-# See what changed
-git status
-
-# Stage + commit
-git add .
-git commit -m "Add basic enemy patrol"
-
-# Push branch
-git push -u origin feat/my-change
 ```
 
 ## Notes for Godot versions
