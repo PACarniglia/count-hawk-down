@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal game_over_requested(reason: String)
+
 @export var move_speed: float = 260.0
 @export var ground_accel: float = 2200.0
 @export var air_accel: float = 1400.0
@@ -15,6 +17,7 @@ extends CharacterBody2D
 @export var wall_jump_horizontal_speed: float = 420.0
 @export var wall_jump_lock_time: float = 0.12
 @export var wall_coyote_time: float = 0.08
+@export var time_limit_seconds: float = 10.0
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
@@ -22,10 +25,29 @@ var wall_jump_lock_timer: float = 0.0
 var wall_jump_direction: float = 0.0
 var wall_coyote_timer: float = 0.0
 var last_wall_normal_x: float = 0.0
+var remaining_time: float = 0.0
+var is_game_over: bool = false
+
+@onready var timer_label: Label = $TimerLabel
+
+
+func _ready() -> void:
+	remaining_time = time_limit_seconds
+	_update_timer_label()
 
 
 func _physics_process(delta: float) -> void:
-	var input_axis := Input.get_axis("ui_left", "ui_right")
+	if is_game_over:
+		velocity = Vector2.ZERO
+		return
+
+	remaining_time = max(remaining_time - delta, 0.0)
+	_update_timer_label()
+	if remaining_time <= 0.0:
+		_trigger_game_over("time_up")
+		return
+
+	var input_axis := Input.get_axis("move_left", "move_right")
 	var on_floor := is_on_floor()
 	var on_wall := is_on_wall_only() and not on_floor
 	var wall_normal := get_wall_normal() if on_wall else Vector2.ZERO
@@ -54,7 +76,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		wall_coyote_timer = max(wall_coyote_timer - delta, 0.0)
 
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("move_jump"):
 		jump_buffer_timer = jump_buffer_time
 	else:
 		jump_buffer_timer = max(jump_buffer_timer - delta, 0.0)
@@ -76,7 +98,7 @@ func _physics_process(delta: float) -> void:
 			coyote_timer = 0.0
 			wall_coyote_timer = 0.0
 
-	if Input.is_action_just_released("ui_accept") and velocity.y < 0.0:
+	if Input.is_action_just_released("move_jump") and velocity.y < 0.0:
 		velocity.y *= jump_cut_multiplier
 
 	var current_gravity := gravity
@@ -88,3 +110,18 @@ func _physics_process(delta: float) -> void:
 	velocity.y = min(velocity.y + current_gravity * delta, current_max_fall_speed)
 
 	move_and_slide()
+
+
+func _update_timer_label() -> void:
+	if timer_label == null:
+		return
+	timer_label.text = "%.1f" % remaining_time
+
+
+func _trigger_game_over(reason: String) -> void:
+	if is_game_over:
+		return
+	is_game_over = true
+	remaining_time = 0.0
+	_update_timer_label()
+	game_over_requested.emit(reason)
