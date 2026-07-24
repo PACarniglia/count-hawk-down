@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/prefabs/enemy/turret.gd" id="1_tur01"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/missile.tscn" id="2_mis01"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(28, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
+radius = 18.0
+
+[node name="Turret" type="StaticBody2D" groups=["enemy"]]
+script = ExtResource("1_tur01")
+missile_scene = ExtResource("2_mis01")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.5, 0.15, 0.7, 1)
+polygon = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+monitoring = false
+monitorable = true
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_hit")
