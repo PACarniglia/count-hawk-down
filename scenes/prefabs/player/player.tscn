@@ -28,11 +28,9 @@ z_index = 1
 color = Color(0.94902, 0.317647, 0.317647, 1)
 polygon = PackedVector2Array(-18, -18, 18, -18, 18, 18, -18, 18)
 
-[node name="TimerLayer" type="CanvasLayer" parent="."]
-layer = 2
-
-[node name="Countdown" parent="TimerLayer" instance=ExtResource("3_countdown")]
+[node name="Countdown" parent="." instance=ExtResource("3_countdown")]
 randomize_on_ready = false
+display_above_parent = true
 
 [node name="SwordHitbox" type="Area2D" parent="." unique_id=2075970436]
 position = Vector2(28, 0)

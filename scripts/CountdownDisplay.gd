@@ -9,6 +9,7 @@ signal expired
 @export var minimum_start_seconds := 101
 @export var maximum_start_seconds := 999
 @export var randomize_on_ready := true
+@export var display_above_parent := false
 
 @export var value := 0.0:
 	set(new_value):
@@ -20,6 +21,7 @@ signal expired
 @onready var tens_label: Label = $NumberRow/Tens
 @onready var ones_label: Label = $NumberRow/Ones
 @onready var tenths_label: Label = $NumberRow/Tenths
+@onready var number_row: HBoxContainer = $NumberRow
 @onready var particle_layer: Control = $ParticleLayer
 
 var displayed_tenths := -1
@@ -41,9 +43,19 @@ class DigitParticle extends Label:
 			queue_free()
 
 func _ready() -> void:
+	if display_above_parent:
+		_configure_world_space_display()
 	if randomize_on_ready:
 		reset()
 	_update_display()
+
+func _configure_world_space_display() -> void:
+	set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	position = Vector2(-62.0, -90.0)
+	size = Vector2(124.0, 52.0)
+	number_row.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	number_row.position = Vector2.ZERO
+	number_row.size = size
 
 func _process(delta: float) -> void:
 	if not is_running or has_expired:
