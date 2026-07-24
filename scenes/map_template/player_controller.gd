@@ -46,7 +46,6 @@ func _physics_process(delta: float) -> void:
 	if remaining_time <= 0.0:
 		_trigger_game_over("time_up")
 		return
-
 	var input_axis := Input.get_axis("move_left", "move_right")
 	var on_floor := is_on_floor()
 	var on_wall := is_on_wall_only() and not on_floor
