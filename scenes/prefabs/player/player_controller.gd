@@ -29,7 +29,6 @@ var wall_jump_lock_timer: float = 0.0
 var wall_jump_direction: float = 0.0
 var wall_coyote_timer: float = 0.0
 var last_wall_normal_x: float = 0.0
-var remaining_time: float = 0.0
 var is_game_over: bool = false
 var iframes_timer: float = 0.0
 var flash_timer: float = 0.0
@@ -37,24 +36,19 @@ var sword_timer: float = 0.0
 var _facing: float = 1.0
 
 
-@onready var timer_label: Label = $TimerLabel
+@onready var countdown: CountdownDisplay = $TimerLayer/Countdown
 @onready var sword_hitbox: Area2D = $SwordHitbox
 
 
 func _ready() -> void:
-	remaining_time = time_limit_seconds
-	_update_timer_label()
+	countdown.value = time_limit_seconds
+	countdown.expired.connect(_on_countdown_expired)
+	countdown.start()
 
 
 func _physics_process(delta: float) -> void:
 	if is_game_over:
 		velocity = Vector2.ZERO
-		return
-
-	remaining_time = max(remaining_time - delta, 0.0)
-	_update_timer_label()
-	if remaining_time <= 0.0:
-		_trigger_game_over("time_up")
 		return
 
 	if iframes_timer > 0.0:
@@ -141,18 +135,11 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _update_timer_label() -> void:
-	if timer_label == null:
-		return
-	timer_label.text = "%.1f" % remaining_time
-
-
 func take_damage() -> void:
 	if iframes_timer > 0.0 or is_game_over:
 		return
-	remaining_time = max(remaining_time - damage_penalty_seconds, 0.0)
-	_update_timer_label()
-	if remaining_time <= 0.0:
+	countdown.value = maxf(countdown.value - damage_penalty_seconds, 0.0)
+	if is_zero_approx(countdown.value):
 		_trigger_game_over("time_up")
 		return
 	iframes_timer = iframes_duration
@@ -191,8 +178,7 @@ func _end_swing() -> void:
 
 
 func kill_enemy() -> void:
-	remaining_time += RandomNumberGenerator.new().randf_range(3.0, 10.0)
-	_update_timer_label()
+	countdown.value += RandomNumberGenerator.new().randf_range(3.0, 10.0)
 
 
 func _on_sword_area_entered(area: Area2D) -> void:
@@ -208,6 +194,10 @@ func _trigger_game_over(reason: String) -> void:
 	if is_game_over:
 		return
 	is_game_over = true
-	remaining_time = 0.0
-	_update_timer_label()
+	countdown.stop()
+	countdown.value = 0.0
 	game_over_requested.emit(reason)
+
+
+func _on_countdown_expired() -> void:
+	_trigger_game_over("time_up")

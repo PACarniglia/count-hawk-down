@@ -8,6 +8,7 @@ signal expired
 
 @export var minimum_start_seconds := 101
 @export var maximum_start_seconds := 999
+@export var randomize_on_ready := true
 
 @export var value := 0.0:
 	set(new_value):
@@ -40,7 +41,8 @@ class DigitParticle extends Label:
 			queue_free()
 
 func _ready() -> void:
-	reset()
+	if randomize_on_ready:
+		reset()
 	_update_display()
 
 func _process(delta: float) -> void:
