@@ -4,6 +4,11 @@ extends Control
 const DIGIT_LIFETIME := 0.85
 const DIGIT_GRAVITY := 900.0
 
+signal expired
+
+@export var minimum_start_seconds := 101
+@export var maximum_start_seconds := 999
+
 @export var value := 0.0:
 	set(new_value):
 		value = maxf(new_value, 0.0)
@@ -17,6 +22,8 @@ const DIGIT_GRAVITY := 900.0
 @onready var particle_layer: Control = $ParticleLayer
 
 var displayed_tenths := -1
+var is_running := false
+var has_expired := false
 
 class DigitParticle extends Label:
 	var velocity := Vector2.ZERO
@@ -33,7 +40,31 @@ class DigitParticle extends Label:
 			queue_free()
 
 func _ready() -> void:
+	reset()
 	_update_display()
+
+func _process(delta: float) -> void:
+	if not is_running or has_expired:
+		return
+	value = maxf(value - delta, 0.0)
+	if is_zero_approx(value):
+		has_expired = true
+		is_running = false
+		expired.emit()
+
+func reset() -> void:
+	var minimum := mini(minimum_start_seconds, maximum_start_seconds)
+	var maximum := maxi(minimum_start_seconds, maximum_start_seconds)
+	value = randi_range(minimum, maximum)
+	is_running = false
+	has_expired = false
+
+func start() -> void:
+	if not has_expired:
+		is_running = true
+
+func stop() -> void:
+	is_running = false
 
 func _update_display() -> void:
 	if hundreds_label == null or tens_label == null or ones_label == null or tenths_label == null:
