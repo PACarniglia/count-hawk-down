@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://mm6oegnb4ajt" path="res://scenes/map_template/assets/player/player_icon.svg" id="1_y45xn"]
 [ext_resource type="Script" uid="uid://6lk11pamqh5q" path="res://scenes/map_template/player_controller.gd" id="2_s5ac4"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="3_b2eg6"]
+[ext_resource type="Script" path="res://scenes/map_template/map_template.gd" id="4_4wju1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxabp"]
 radius = 18.0
@@ -11,6 +12,7 @@ radius = 18.0
 size = Vector2(36, 36)
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
+script = ExtResource("4_4wju1")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1637487047]
 position = Vector2(0, 10)
@@ -32,6 +34,16 @@ texture = ExtResource("1_y45xn")
 z_index = 1
 color = Color(0.94902, 0.317647, 0.317647, 1)
 polygon = PackedVector2Array(-18, -18, 18, -18, 18, 18, -18, 18)
+
+[node name="TimerLabel" type="Label" parent="Player"]
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
+offset_bottom = -38.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+text = "10.0"
 
 [node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("3_b2eg6")]
 position = Vector2(0, 394)
