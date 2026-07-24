@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/MainMenuScreen.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/FantasyMenuButton.tscn" id="2_fantasy_menu_button"]
+
+[node name="MainMenuScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="MenuButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+offset_left = 48.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -232.0
+offset_right = 248.0
+offset_bottom = -32.0
+grow_vertical = 0
+theme_override_constants/separation = 16
+
+[node name="PlayButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New Game"
+
+[node name="ContinueButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
+layout_mode = 2
+size_flags_horizontal = 3
+modulate = Color(0.45, 0.45, 0.45, 0.85)
+disabled = true
+text = "Continue"
+
+[node name="SettingsButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
+
+[connection signal="pressed" from="MenuButtons/SettingsButton" to="." method="_on_settings_button_pressed"]

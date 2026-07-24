@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://dmuj5j46eo8l6"]
+
+[ext_resource type="Script" uid="uid://46awsa31d5mp" path="res://scripts/SettingsScreen.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/FantasyMenuButton.tscn" id="2_fantasy_menu_button"]
+[ext_resource type="Texture2D" uid="uid://rgwobc77ihku" path="res://sprites/fantasy-ui-borders/Default/Transparent center/panel-transparent-center-000.png" id="3_panel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("3_panel")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.19255567, 0.1925557, 0.19255567, 0.81960785)
+
+[node name="SettingsScreen" type="Control" unique_id=1965451020]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1024301463]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = -117.0
+offset_right = 448.0
+offset_bottom = 287.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=926113818]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="Panel/Margin" unique_id=398821821]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Panel/Margin/Content" unique_id=869304354]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Settings"
+
+[node name="AudioTitle" type="Label" parent="Panel/Margin/Content" unique_id=1596415189]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Audio"
+
+[node name="Master" type="VBoxContainer" parent="Panel/Margin/Content" unique_id=2000170876]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Margin/Content/Master" unique_id=1658860721]
+layout_mode = 2
+text = "Master Audio"
+
+[node name="MasterSlider" type="HSlider" parent="Panel/Margin/Content/Master" unique_id=335710645]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Music" type="VBoxContainer" parent="Panel/Margin/Content" unique_id=58484944]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Margin/Content/Music" unique_id=69708326]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Panel/Margin/Content/Music" unique_id=2004440277]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SoundEffects" type="VBoxContainer" parent="Panel/Margin/Content" unique_id=1779457230]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Margin/Content/SoundEffects" unique_id=859014071]
+layout_mode = 2
+text = "Sound Effects"
+
+[node name="SoundEffectsSlider" type="HSlider" parent="Panel/Margin/Content/SoundEffects" unique_id=1321075608]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="BackButton" parent="Panel/Margin/Content" unique_id=966736943 instance=ExtResource("2_fantasy_menu_button")]
+layout_mode = 2
+text = "Back"
+
+[connection signal="value_changed" from="Panel/Margin/Content/Master/MasterSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="Panel/Margin/Content/Music/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Panel/Margin/Content/SoundEffects/SoundEffectsSlider" to="." method="_on_sound_effects_slider_value_changed"]
+[connection signal="pressed" from="Panel/Margin/Content/BackButton" to="." method="_on_back_button_pressed"]
