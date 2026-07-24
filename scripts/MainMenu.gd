@@ -1,8 +1,8 @@
 extends Control
 
 @export var bpm: float = 120.0
-@export var beat_zoom: float = 0.06
-@export var small_beat_zoom: float = 0.04
+@export var beat_zoom: float = 0.025
+@export var small_beat_zoom: float= 0.015
 @export var zoom_return_speed: float = 0.8
 @export var beat_offset_seconds: float = 0.0
 
@@ -45,6 +45,7 @@ func _ready() -> void:
 	title_part_a.bus = AudioSettings.MUSIC_BUS
 	title_part_b1.bus = AudioSettings.MUSIC_BUS
 	title_part_b2.bus = TITLE_VISUALIZER_BUS
+	menu_click_sound.bus = AudioSettings.SFX_BUS
 	title_part_a.finished.connect(_start_title_part_b)
 	title_part_b1.stream.loop = true
 	title_part_b2.stream.loop = true

@@ -9,7 +9,7 @@
 [ext_resource type="FontFile" uid="uid://b3m8wgety6ayn" path="res://fonts/NewRocker-Regular.ttf" id="7_ui_font"]
 [ext_resource type="Shader" uid="uid://bxye2dgb8i6cy" path="res://shaders/fantasy_vaporwave_background.gdshader" id="8_fantasy_background"]
 [ext_resource type="Shader" uid="uid://ddvgca2lv3ucs" path="res://shaders/title_mist.gdshader" id="9_title_mist"]
-[ext_resource type="AudioStream" path="res://sounds/click1.ogg" id="10_click_sound"]
+[ext_resource type="AudioStream" uid="uid://bhwyvrx8slqm5" path="res://sounds/click1.ogg" id="10_click_sound"]
 
 [sub_resource type="Theme" id="Theme_ui"]
 default_font = ExtResource("7_ui_font")
@@ -127,9 +127,8 @@ stream = ExtResource("4_title_part_b1")
 [node name="TitlePartB2" type="AudioStreamPlayer" parent="." unique_id=194057117]
 stream = ExtResource("5_title_part_b2")
 
-[node name="MenuClickSound" type="AudioStreamPlayer" parent="."]
+[node name="MenuClickSound" type="AudioStreamPlayer" parent="." unique_id=1705871572]
 stream = ExtResource("10_click_sound")
-bus = &"SFX"
 
 [node name="FadeOverlay" type="ColorRect" parent="." unique_id=1431294577]
 layout_mode = 1
