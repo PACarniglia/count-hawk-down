@@ -25,7 +25,7 @@ var last_wall_normal_x: float = 0.0
 
 
 func _physics_process(delta: float) -> void:
-	var input_axis := Input.get_axis("ui_left", "ui_right")
+	var input_axis := Input.get_axis("move_left", "move_right")
 	var on_floor := is_on_floor()
 	var on_wall := is_on_wall_only() and not on_floor
 	var wall_normal := get_wall_normal() if on_wall else Vector2.ZERO
@@ -54,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		wall_coyote_timer = max(wall_coyote_timer - delta, 0.0)
 
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("move_jump"):
 		jump_buffer_timer = jump_buffer_time
 	else:
 		jump_buffer_timer = max(jump_buffer_timer - delta, 0.0)
