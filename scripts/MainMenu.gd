@@ -10,6 +10,7 @@ extends Control
 @onready var title_part_a: AudioStreamPlayer = $TitlePartA
 @onready var title_part_b1: AudioStreamPlayer = $TitlePartB1
 @onready var title_part_b2: AudioStreamPlayer = $TitlePartB2
+@onready var menu_click_sound: AudioStreamPlayer = $MenuClickSound
 @onready var screen_container: Control = $ScreenContainer
 @onready var fade_overlay: ColorRect = $FadeOverlay
 @onready var countdown_label: Label = $CountdownLabel
@@ -146,7 +147,12 @@ func _register_interactable_controls(node: Node) -> void:
 				control.mouse_default_cursor_shape = Control.CURSOR_ARROW
 				control.mouse_entered.connect(_on_interactable_mouse_entered.bind(control))
 				control.mouse_exited.connect(_on_interactable_mouse_exited.bind(control))
+				if control is BaseButton:
+					(control as BaseButton).pressed.connect(_on_menu_button_pressed)
 		_register_interactable_controls(child)
+
+func _on_menu_button_pressed() -> void:
+	menu_click_sound.play()
 
 func _on_interactable_mouse_entered(control: Control) -> void:
 	hovered_interactable = control
