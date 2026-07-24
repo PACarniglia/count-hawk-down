@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://dwuhpvqmh3p6t"]
+
+[ext_resource type="Script" uid="uid://cqj6o8ybupply" path="res://scripts/MainMenu.gd" id="1_main_menu"]
+[ext_resource type="Shader" uid="uid://bkkpo27q62m25" path="res://shaders/beat_zoom.gdshader" id="2_beat_zoom"]
+[ext_resource type="AudioStream" uid="uid://dsgo0riltexsp" path="res://music/title_part_a.mp3" id="3_title_part_a"]
+[ext_resource type="AudioStream" uid="uid://chea53iqv2yup" path="res://music/title_part_b1.mp3" id="4_title_part_b1"]
+[ext_resource type="AudioStream" uid="uid://b3sc7ae6s72fv" path="res://music/title_part_b2.mp3" id="5_title_part_b2"]
+[ext_resource type="Script" uid="uid://cgbri0fby6utk" path="res://scripts/AudioVisualizer.gd" id="6_audio_visualizer"]
+[ext_resource type="FontFile" uid="uid://b3m8wgety6ayn" path="res://fonts/NewRocker-Regular.ttf" id="7_ui_font"]
+[ext_resource type="Shader" uid="uid://bxye2dgb8i6cy" path="res://shaders/fantasy_vaporwave_background.gdshader" id="8_fantasy_background"]
+[ext_resource type="Shader" uid="uid://ddvgca2lv3ucs" path="res://shaders/title_mist.gdshader" id="9_title_mist"]
+
+[sub_resource type="Theme" id="Theme_ui"]
+default_font = ExtResource("7_ui_font")
+default_font_size = 22
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fantasy_background"]
+shader = ExtResource("8_fantasy_background")
+shader_parameter/motion_speed = 0.32
+shader_parameter/distortion = 0.72
+shader_parameter/ink_black = Color(0.004, 0.002, 0.009, 1)
+shader_parameter/shadow_violet = Color(0.045, 0.022, 0.09, 1)
+shader_parameter/liquid_violet = Color(0.24, 0.15, 0.34, 1)
+shader_parameter/lavender_sheen = Color(0.52, 0.36, 0.68, 1)
+shader_parameter/vaporwave_tint = Color(0.42, 0.1, 0.52, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_title_mist"]
+shader = ExtResource("9_title_mist")
+shader_parameter/wave_strength = 0.006
+shader_parameter/wave_speed = 0.72
+shader_parameter/mist_color = Color(0.62, 0.38, 0.84, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_beat_zoom"]
+shader = ExtResource("2_beat_zoom")
+shader_parameter/zoom_amount = 0.0
+shader_parameter/pulse_strength = 0.0
+shader_parameter/bloom_strength = 1.0
+
+[node name="root" type="Control" unique_id=1373968500]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ui")
+script = ExtResource("1_main_menu")
+
+[node name="FantasyVaporwaveBackground" type="ColorRect" parent="." unique_id=1718014711]
+material = SubResource("ShaderMaterial_fantasy_background")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ScreenContainer" type="Control" parent="." unique_id=1218181296]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CountdownLabel" type="Label" parent="." unique_id=250985323]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 32.0
+offset_right = -40.0
+offset_bottom = 84.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 40
+text = "000"
+horizontal_alignment = 2
+
+[node name="GameTitle" type="Label" parent="." unique_id=1305671451]
+material = SubResource("ShaderMaterial_title_mist")
+layout_mode = 1
+offset_left = 40.0
+offset_top = 32.0
+offset_right = 540.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 52
+text = "Count Hawk Down"
+
+[node name="TitleAudioVisualizer" type="Control" parent="." unique_id=490303983]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -319.0
+offset_top = -82.0
+offset_right = 1.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("6_audio_visualizer")
+bar_color = Color(0.54901963, 0, 1, 0.9019608)
+
+[node name="BeatZoomOverlay" type="ColorRect" parent="." unique_id=1117715260]
+material = SubResource("ShaderMaterial_beat_zoom")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TitlePartA" type="AudioStreamPlayer" parent="." unique_id=1967282279]
+stream = ExtResource("3_title_part_a")
+
+[node name="TitlePartB1" type="AudioStreamPlayer" parent="." unique_id=1387154304]
+stream = ExtResource("4_title_part_b1")
+
+[node name="TitlePartB2" type="AudioStreamPlayer" parent="." unique_id=194057117]
+stream = ExtResource("5_title_part_b2")
+
+[node name="FadeOverlay" type="ColorRect" parent="." unique_id=1431294577]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
