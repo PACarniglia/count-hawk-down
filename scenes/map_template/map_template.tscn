@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://byy4rj0sxpb76"]
+
+[ext_resource type="Texture2D" uid="uid://mm6oegnb4ajt" path="res://scenes/map_template/assets/player/player_icon.svg" id="1_y45xn"]
+[ext_resource type="Script" uid="uid://6lk11pamqh5q" path="res://scenes/map_template/player_controller.gd" id="2_s5ac4"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="3_b2eg6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bxabp"]
+radius = 18.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_mti2e"]
+size = Vector2(36, 36)
+
+[node name="Node2D" type="Node2D" unique_id=764478236]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1637487047]
+position = Vector2(0, 10)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1300153904]
+position = Vector2(0, 40)
+script = ExtResource("2_s5ac4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1193240897]
+shape = SubResource("CircleShape2D_bxabp")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Player" unique_id=472396816]
+mesh = SubResource("QuadMesh_mti2e")
+texture = ExtResource("1_y45xn")
+
+[node name="Polygon2D" type="Polygon2D" parent="Player" unique_id=2139838526]
+z_index = 1
+color = Color(0.94902, 0.317647, 0.317647, 1)
+polygon = PackedVector2Array(-18, -18, 18, -18, 18, 18, -18, 18)
+
+[node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("3_b2eg6")]
+position = Vector2(0, 394)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Ground2" parent="." unique_id=770021381 instance=ExtResource("3_b2eg6")]
+position = Vector2(0, -374)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallLeft" parent="." unique_id=1388344974 instance=ExtResource("3_b2eg6")]
+position = Vector2(-664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallRight" parent="." unique_id=1861132496 instance=ExtResource("3_b2eg6")]
+position = Vector2(664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
