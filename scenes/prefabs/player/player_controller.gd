@@ -21,7 +21,6 @@ signal game_over_requested(reason: String)
 @export var damage_penalty_seconds: float = 5.0
 @export var iframes_duration: float = 1.5
 @export var flash_interval: float = 0.1
-@export var kill_bonus_seconds: float = 10.0
 @export var sword_duration: float = 0.18
 
 var coyote_timer: float = 0.0
@@ -36,6 +35,7 @@ var iframes_timer: float = 0.0
 var flash_timer: float = 0.0
 var sword_timer: float = 0.0
 var _facing: float = 1.0
+
 
 @onready var timer_label: Label = $TimerLabel
 @onready var sword_hitbox: Area2D = $SwordHitbox
@@ -191,7 +191,7 @@ func _end_swing() -> void:
 
 
 func kill_enemy() -> void:
-	remaining_time += kill_bonus_seconds
+	remaining_time += RandomNumberGenerator.new().randf_range(3.0, 10.0)
 	_update_timer_label()
 
 
