@@ -1,6 +1,6 @@
 # Repository conventions
 
-- Branches: `<type>/<name>` (for example, `feat/fantasy-main-menu`).
+- Branches: `feat/<name>`, `fix/<name>`, `chore/<name>`, or `hotfix/<name>`.
 - Use Conventional Commits: `<type>(<scope>): <summary>`.
 - Before a PR: rebase on `origin/main`, run `git diff --check`, run the Godot menu smoke test, push, then open the PR against `main`.
 
