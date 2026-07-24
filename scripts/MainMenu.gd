@@ -13,7 +13,7 @@ extends Control
 @onready var menu_click_sound: AudioStreamPlayer = $MenuClickSound
 @onready var screen_container: Control = $ScreenContainer
 @onready var fade_overlay: ColorRect = $FadeOverlay
-@onready var countdown_label: Label = $CountdownLabel
+@onready var countdown: CountdownDisplay = $Countdown
 
 const CURSOR_NORMAL_PATH := "res://sprites/crosshairs/White/crosshair038.png"
 const CURSOR_PRESSED_PATH := "res://sprites/crosshairs/White/crosshair037.png"
@@ -22,13 +22,12 @@ const CURSOR_PRESSED_TEXTURE: Texture2D = preload(CURSOR_PRESSED_PATH)
 const CURSOR_SIZE := 64
 const CURSOR_HOVER_SIZE := 76
 const TITLE_VISUALIZER_BUS := &"TitleVisualizer"
-
 var current_zoom := 0.0
 var active_track: AudioStreamPlayer
 var last_beat_index := -1
 var current_screen: Control
 var is_restarting := false
-var remaining_countdown_seconds: int
+var remaining_countdown_time := 0.0
 var has_started_part_b := false
 var cursor_normal: ImageTexture
 var cursor_hover: ImageTexture
@@ -51,8 +50,8 @@ func _ready() -> void:
 	title_part_b2.stream.loop = true
 	active_track = title_part_a
 	fade_overlay.modulate.a = 0.0
-	remaining_countdown_seconds = randi_range(101, 999)
-	_update_countdown_label()
+	remaining_countdown_time = randi_range(101, 999)
+	countdown.value = remaining_countdown_time
 	title_part_a.play()
 	show_main_menu()
 
@@ -63,6 +62,7 @@ func _process(delta: float) -> void:
 		_update_cursor()
 	_update_cursor_position()
 	_update_beat_from_music()
+	_update_countdown(delta)
 	current_zoom = move_toward(current_zoom, 0.0, zoom_return_speed * delta)
 	beat_overlay.material.set_shader_parameter("zoom_amount", current_zoom)
 	var strongest_beat := maxf(beat_zoom, small_beat_zoom)
@@ -91,8 +91,6 @@ func _update_beat_from_music() -> void:
 func trigger_beat(beat_index: int) -> void:
 	if has_started_part_b:
 		current_zoom = beat_zoom if beat_index % 2 == 0 else small_beat_zoom
-	if beat_index > 0 and beat_index % 2 == 0:
-		_count_down_one_second()
 
 func show_main_menu() -> void:
 	_show_screen(MAIN_MENU_SCREEN.instantiate())
@@ -176,14 +174,13 @@ func _update_cursor_position() -> void:
 	if cursor_display:
 		cursor_display.position = get_viewport().get_mouse_position() - cursor_display.size / 2.0
 
-func _count_down_one_second() -> void:
-	remaining_countdown_seconds = maxi(remaining_countdown_seconds - 1, 0)
-	_update_countdown_label()
-	if remaining_countdown_seconds == 0:
+func _update_countdown(delta: float) -> void:
+	if not has_started_part_b or is_restarting:
+		return
+	remaining_countdown_time = maxf(remaining_countdown_time - delta, 0.0)
+	countdown.value = remaining_countdown_time
+	if is_zero_approx(remaining_countdown_time):
 		restart_after_fade()
-
-func _update_countdown_label() -> void:
-	countdown_label.text = "%03d" % remaining_countdown_seconds
 
 func restart_after_fade() -> void:
 	if is_restarting:

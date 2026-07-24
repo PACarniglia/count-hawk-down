@@ -10,6 +10,7 @@
 [ext_resource type="Shader" uid="uid://bxye2dgb8i6cy" path="res://shaders/fantasy_vaporwave_background.gdshader" id="8_fantasy_background"]
 [ext_resource type="Shader" uid="uid://ddvgca2lv3ucs" path="res://shaders/title_mist.gdshader" id="9_title_mist"]
 [ext_resource type="AudioStream" uid="uid://bhwyvrx8slqm5" path="res://sounds/click1.ogg" id="10_click_sound"]
+[ext_resource type="PackedScene" path="res://scenes/CountdownDisplay.tscn" id="11_countdown"]
 
 [sub_resource type="Theme" id="Theme_ui"]
 default_font = ExtResource("7_ui_font")
@@ -65,20 +66,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CountdownLabel" type="Label" parent="." unique_id=250985323]
+[node name="Countdown" parent="." instance=ExtResource("11_countdown")]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -180.0
-offset_top = 32.0
-offset_right = -40.0
-offset_bottom = 84.0
-grow_horizontal = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 40
-text = "000"
-horizontal_alignment = 2
 
 [node name="GameTitle" type="Label" parent="." unique_id=1305671451]
 material = SubResource("ShaderMaterial_title_mist")
