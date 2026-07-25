@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bd2ab8r6jw5jt"]
+
+[ext_resource type="Script" uid="uid://bxavk08ajcpfa" path="res://scenes/map_template/map_template.gd" id="1_aew8b"]
+[ext_resource type="PackedScene" uid="uid://dlpbohgxrj7o6" path="res://scenes/prefabs/player/player.tscn" id="2_4ptfx"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="4_sb4u2"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_lh0ja"]
+
+[node name="Node2D" type="Node2D" unique_id=764478236]
+script = ExtResource("1_aew8b")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=831398233]
+position = Vector2(0, 10)
+limit_left = -640
+limit_top = -350
+limit_right = 640
+limit_bottom = 370
+
+[node name="Player" parent="." unique_id=789739344 instance=ExtResource("2_4ptfx")]
+position = Vector2(-596, 349)
+time_limit_seconds = 60.0
+
+[node name="Turret" parent="." unique_id=1249402457 instance=ExtResource("4_sb4u2")]
+position = Vector2(517, 354)
+
+[node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("5_lh0ja")]
+position = Vector2(0, 394)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Ground2" parent="." unique_id=770021381 instance=ExtResource("5_lh0ja")]
+position = Vector2(0, -374)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallLeft" parent="." unique_id=1388344974 instance=ExtResource("5_lh0ja")]
+position = Vector2(-664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallRight" parent="." unique_id=1861132496 instance=ExtResource("5_lh0ja")]
+position = Vector2(664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
