@@ -29,10 +29,12 @@ const ROOM_DATA := {
 @export var starting_room_id := "entry"
 @export var starting_entry_id := "EntryPointLeft"
 @export var transition_duration := 0.55
+@export var door_retrigger_lockout := 0.2
 
 var current_room_id := ""
 var loaded_rooms: Dictionary = {}
 var is_transitioning := false
+var _door_retrigger_locked := false
 
 @onready var world := get_parent() as Node2D
 @onready var loaded_rooms_root := world.get_node("LoadedRooms") as Node2D
@@ -53,15 +55,18 @@ func _start() -> void:
 		push_error("Missing entry '%s' in room '%s'." % [starting_entry_id, starting_room_id])
 		return
 	current_room_id = starting_room_id
+	room.set_active(true)
 	player.global_position = entry.global_position
 	camera.global_position = room.camera_anchor.global_position
 	load_neighbors(current_room_id)
+	update_room_activity()
 
 
-func request_transition(target_room_id: String, target_entry_id: String) -> void:
-	if is_transitioning or target_room_id == current_room_id:
-		return
+func request_transition(target_room_id: String, target_entry_id: String) -> bool:
+	if is_transitioning or _door_retrigger_locked or target_room_id == current_room_id:
+		return false
 	transition_to(target_room_id, target_entry_id)
+	return true
 
 
 func transition_to(target_room_id: String, target_entry_id: String) -> void:
@@ -87,9 +92,14 @@ func transition_to(target_room_id: String, target_entry_id: String) -> void:
 	current_room_id = target_room_id
 	load_neighbors(current_room_id)
 	unload_distant_rooms()
+	update_room_activity()
 	player.set("input_locked", false)
 	is_transitioning = false
 	transition_requested.emit()
+	if door_retrigger_lockout > 0.0:
+		_door_retrigger_locked = true
+		await get_tree().create_timer(door_retrigger_lockout).timeout
+		_door_retrigger_locked = false
 
 
 func load_room(room_id: String) -> StreamedRoom:
@@ -104,6 +114,7 @@ func load_room(room_id: String) -> StreamedRoom:
 	loaded_rooms_root.add_child(room)
 	room.global_position = data.position
 	loaded_rooms[room_id] = room
+	room.set_active(room_id == current_room_id)
 	return room
 
 
@@ -121,3 +132,11 @@ func unload_distant_rooms() -> void:
 		var room := loaded_rooms[room_id] as StreamedRoom
 		room.queue_free()
 		loaded_rooms.erase(room_id)
+
+
+func update_room_activity() -> void:
+	for room_id in loaded_rooms.keys():
+		var room := loaded_rooms[room_id] as StreamedRoom
+		if room == null:
+			continue
+		room.set_active(room_id == current_room_id)

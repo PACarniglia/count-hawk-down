@@ -37,7 +37,7 @@ var _facing: float = 1.0
 var input_locked: bool = false
 
 
-@onready var countdown: CountdownDisplay = $TimerLayer/Countdown
+@onready var countdown = $TimerLayer/Countdown
 @onready var sword_hitbox: Area2D = $SwordHitbox
 
 

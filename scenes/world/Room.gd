@@ -6,6 +6,10 @@ extends Node2D
 @onready var camera_anchor: Marker2D = $CameraAnchor
 
 
+func set_active(active: bool) -> void:
+	process_mode = Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
+
+
 func get_entry(entry_id: String) -> Marker2D:
 	return get_node_or_null(entry_id) as Marker2D
 

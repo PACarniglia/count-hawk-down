@@ -14,9 +14,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if manager == null:
 		push_warning("Room door has no RoomManager.")
 		return
+	if not manager.request_transition(target_room_id, target_entry_id):
+		return
 	_used = true
 	manager.transition_requested.connect(_reset_after_transition, CONNECT_ONE_SHOT)
-	manager.request_transition(target_room_id, target_entry_id)
 
 
 func _reset_after_transition() -> void:
