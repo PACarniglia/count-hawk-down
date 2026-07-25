@@ -1,26 +1,17 @@
 [gd_scene format=3 uid="uid://b6m6ea8ioge67"]
 
-[ext_resource type="Script" uid="uid://bxavk08ajcpfa" path="res://scenes/map_template/map_template.gd" id="1_4mqt4"]
-[ext_resource type="PackedScene" uid="uid://dlpbohgxrj7o6" path="res://scenes/prefabs/player/player.tscn" id="2_lmq75"]
+[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_4mqt4"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/enemy.tscn" id="3_1wqyq"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_mbpq8"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
 script = ExtResource("1_4mqt4")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=831398233]
-position = Vector2(0, 10)
-limit_left = -640
-limit_top = -350
-limit_right = 640
-limit_bottom = 370
-
-[node name="Player" parent="." unique_id=789739344 instance=ExtResource("2_lmq75")]
-position = Vector2(-604, 349)
-time_limit_seconds = 60.0
+room_id = "melee"
 
 [node name="Enemy" parent="." unique_id=2118506278 instance=ExtResource("3_1wqyq")]
 position = Vector2(599, 352)
+state_id = "right_guard"
 
 [node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("5_mbpq8")]
 position = Vector2(0, 394)
@@ -54,3 +45,22 @@ platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 position = Vector2(192, 257)
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CameraAnchor" type="Marker2D" parent="." unique_id=1376170785]
+position = Vector2(0, 10)
+
+[node name="EntryPointLeft" type="Marker2D" parent="." unique_id=2146767675]
+position = Vector2(-600, 352)
+
+[node name="EntryPointRight" type="Marker2D" parent="." unique_id=1473887890]
+position = Vector2(609, 343)
+
+[node name="DoorToMovement" parent="." instance=ExtResource("6_door")]
+position = Vector2(-600, 330)
+target_room_id = "movement"
+target_entry_id = "EntryPointRight"
+
+[node name="DoorToRanged" parent="." instance=ExtResource("6_door")]
+position = Vector2(600, 330)
+target_room_id = "ranged"
+target_entry_id = "EntryPointLeft"

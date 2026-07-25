@@ -34,6 +34,7 @@ var iframes_timer: float = 0.0
 var flash_timer: float = 0.0
 var sword_timer: float = 0.0
 var _facing: float = 1.0
+var input_locked: bool = false
 
 
 @onready var countdown: CountdownDisplay = $TimerLayer/Countdown
@@ -48,6 +49,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_game_over:
+		velocity = Vector2.ZERO
+		return
+	if input_locked:
 		velocity = Vector2.ZERO
 		return
 
