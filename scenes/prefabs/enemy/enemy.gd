@@ -5,8 +5,13 @@ signal player_killed
 @export var move_speed: float = 80.0
 @export var gravity: float = 1800.0
 @export var max_fall_speed: float = 1100.0
+@export var state_id: String
 
 var _direction: float = 1.0
+
+
+func _ready() -> void:
+	add_to_group("room_persistent")
 
 
 func _physics_process(delta: float) -> void:
@@ -49,4 +54,16 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 
 func die() -> void:
+	_save_removed_state()
 	queue_free()
+
+
+func _save_removed_state() -> void:
+	if state_id.is_empty():
+		return
+	var node: Node = get_parent()
+	while node != null:
+		if node is StreamedRoom:
+			RoomStateStore.set_entity_state(node.room_id, state_id, {"removed": true})
+			return
+		node = node.get_parent()

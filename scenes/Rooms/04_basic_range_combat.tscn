@@ -1,26 +1,17 @@
 [gd_scene format=3 uid="uid://bd2ab8r6jw5jt"]
 
-[ext_resource type="Script" uid="uid://bxavk08ajcpfa" path="res://scenes/map_template/map_template.gd" id="1_aew8b"]
-[ext_resource type="PackedScene" uid="uid://dlpbohgxrj7o6" path="res://scenes/prefabs/player/player.tscn" id="2_4ptfx"]
+[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_aew8b"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="4_sb4u2"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_lh0ja"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
 script = ExtResource("1_aew8b")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=831398233]
-position = Vector2(0, 10)
-limit_left = -640
-limit_top = -350
-limit_right = 640
-limit_bottom = 370
-
-[node name="Player" parent="." unique_id=789739344 instance=ExtResource("2_4ptfx")]
-position = Vector2(-596, 349)
-time_limit_seconds = 60.0
+room_id = "ranged"
 
 [node name="Turret" parent="." unique_id=1249402457 instance=ExtResource("4_sb4u2")]
 position = Vector2(517, 354)
+state_id = "right_turret"
 
 [node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("5_lh0ja")]
 position = Vector2(0, 394)
@@ -43,3 +34,17 @@ position = Vector2(664, 10)
 rotation = 1.5708
 platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CameraAnchor" type="Marker2D" parent="." unique_id=940273135]
+position = Vector2(0, 10)
+
+[node name="EntryPointLeft" type="Marker2D" parent="." unique_id=1150503863]
+position = Vector2(-600, 352)
+
+[node name="EntryPointRight" type="Marker2D" parent="." unique_id=806061329]
+position = Vector2(609, 343)
+
+[node name="DoorToMelee" parent="." instance=ExtResource("6_door")]
+position = Vector2(-600, 330)
+target_room_id = "melee"
+target_entry_id = "EntryPointRight"
