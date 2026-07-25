@@ -27,7 +27,12 @@ const ROOM_DATA := {
 	"zig_zag": {
 		"path": "res://scenes/Rooms/05_zig_zag_room.tscn",
 		"position": Vector2(5120, 0),
-		"neighbors": ["ranged"],
+		"neighbors": ["ranged", "reign_of_fire"],
+	},
+	"reign_of_fire": {
+		"path": "res://scenes/Rooms/06_reign_of_fire.tscn",
+		"position": Vector2(6400, 0),
+		"neighbors": ["zig_zag"],
 	},
 }
 
