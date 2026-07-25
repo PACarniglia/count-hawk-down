@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bqj5s1m7s0w5n"]
+
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_room"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="2_platform"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/boss.tscn" id="4_boss"]
+
+[node name="Node2D" type="Node2D" unique_id=562082982]
+script = ExtResource("1_room")
+room_id = "boss"
+
+[node name="Ground" parent="." unique_id=1268826291 instance=ExtResource("2_platform")]
+position = Vector2(0, 394)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Ground2" parent="." unique_id=693819119 instance=ExtResource("2_platform")]
+position = Vector2(0, -374)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallLeft" parent="." unique_id=670107498 instance=ExtResource("2_platform")]
+position = Vector2(-664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallRight" parent="." unique_id=108884050 instance=ExtResource("2_platform")]
+position = Vector2(664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CenterPlatform" parent="." unique_id=730804428 instance=ExtResource("2_platform")]
+position = Vector2(0, 220)
+platform_size = Vector2(300, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Boss" parent="." unique_id=1259766396 instance=ExtResource("4_boss")]
+position = Vector2(-2, -76)
+state_id = "boss_01"
+
+[node name="CameraAnchor" type="Marker2D" parent="." unique_id=787327005]
+position = Vector2(0, 10)
+
+[node name="EntryPointLeft" type="Marker2D" parent="." unique_id=1073479515]
+position = Vector2(-600, 352)
+
+[node name="EntryPointRight" type="Marker2D" parent="." unique_id=2037725910]
+position = Vector2(609, 343)
+
+[node name="DoorToRanged" parent="." unique_id=1553564454 instance=ExtResource("3_door")]
+position = Vector2(-600, 330)
+target_room_id = "ranged"
+target_entry_id = "EntryPointRight"
