@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 signal game_over_requested(reason: String)
 
+const SpellDefinition = preload("res://scripts/spells/spell_definition.gd")
+
 @export var move_speed: float = 260.0
 @export var ground_accel: float = 2200.0
 @export var air_accel: float = 1400.0
@@ -22,6 +24,7 @@ signal game_over_requested(reason: String)
 @export var iframes_duration: float = 1.5
 @export var flash_interval: float = 0.1
 @export var sword_duration: float = 0.18
+@export var equipped_spell: SpellDefinition
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
@@ -33,6 +36,7 @@ var is_game_over: bool = false
 var iframes_timer: float = 0.0
 var flash_timer: float = 0.0
 var sword_timer: float = 0.0
+var spell_cooldown_timer: float = 0.0
 var _facing: float = 1.0
 var input_locked: bool = false
 
@@ -64,8 +68,12 @@ func _physics_process(delta: float) -> void:
 		if iframes_timer <= 0.0:
 			_set_visible(true)
 
+	spell_cooldown_timer = maxf(spell_cooldown_timer - delta, 0.0)
+
 	if Input.is_action_just_pressed("attack") and sword_timer <= 0.0:
 		_swing_sword()
+	if Input.is_action_just_pressed("cast_spell"):
+		_cast_spell()
 
 	if sword_timer > 0.0:
 		sword_timer = max(sword_timer - delta, 0.0)
@@ -179,6 +187,23 @@ func _end_swing() -> void:
 	var vis := sword_hitbox.get_node_or_null("SwordVisual") as Polygon2D
 	if vis:
 		vis.visible = false
+
+
+func _cast_spell() -> void:
+	if equipped_spell == null or equipped_spell.projectile_scene == null:
+		return
+	if spell_cooldown_timer > 0.0 or countdown.value < equipped_spell.time_cost:
+		return
+
+	countdown.value -= equipped_spell.time_cost
+	spell_cooldown_timer = equipped_spell.cooldown
+	var projectile := equipped_spell.projectile_scene.instantiate()
+	get_tree().current_scene.add_child(projectile)
+	var aim_direction := global_position.direction_to(get_global_mouse_position())
+	if aim_direction == Vector2.ZERO:
+		aim_direction = Vector2(_facing, 0.0)
+	projectile.global_position = global_position + aim_direction * 24.0
+	projectile.launch(equipped_spell, aim_direction)
 
 
 func kill_enemy() -> void:

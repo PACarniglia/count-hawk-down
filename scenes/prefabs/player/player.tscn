@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://dlpbohgxrj7o6"]
+[gd_scene load_steps=5 format=3 uid="uid://dlpbohgxrj7o6"]
 
 [ext_resource type="Script" uid="uid://6lk11pamqh5q" path="res://scenes/prefabs/player/player_controller.gd" id="1_ctab2"]
 [ext_resource type="Texture2D" uid="uid://mm6oegnb4ajt" path="res://scenes/map_template/assets/player/player_icon.svg" id="2_ypqk3"]
 [ext_resource type="PackedScene" path="res://scenes/CountdownDisplay.tscn" id="3_countdown"]
+[ext_resource type="Resource" path="res://scripts/spells/fireball.tres" id="4_fireball"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxabp"]
 radius = 18.0
@@ -15,6 +16,7 @@ height = 40.0
 
 [node name="Player" type="CharacterBody2D" unique_id=740720376 groups=["player"]]
 script = ExtResource("1_ctab2")
+equipped_spell = ExtResource("4_fireball")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1132579238]
 shape = SubResource("CircleShape2D_bxabp")

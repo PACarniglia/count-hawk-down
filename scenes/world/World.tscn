@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://drto77bk7aqyy" path="res://scenes/world/world.gd" id="1_1oml7"]
 [ext_resource type="PackedScene" uid="uid://dlpbohgxrj7o6" path="res://scenes/prefabs/player/player.tscn" id="2_6eebf"]
-[ext_resource type="Script" path="res://scenes/world/RoomManager.gd" id="3_room_manager"]
+[ext_resource type="Script" uid="uid://cklnuwtnfxeaw" path="res://scenes/world/RoomManager.gd" id="3_room_manager"]
 
 [node name="World" type="Node2D" unique_id=1918589627]
 script = ExtResource("1_1oml7")
