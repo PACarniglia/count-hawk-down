@@ -13,7 +13,7 @@ extends Control
 @onready var menu_click_sound: AudioStreamPlayer = $MenuClickSound
 @onready var screen_container: Control = $ScreenContainer
 @onready var fade_overlay: ColorRect = $FadeOverlay
-@onready var countdown: CountdownDisplay = $Countdown
+@onready var countdown = $Countdown
 
 const CURSOR_NORMAL_PATH := "res://sprites/crosshairs/White/crosshair038.png"
 const CURSOR_PRESSED_PATH := "res://sprites/crosshairs/White/crosshair037.png"
