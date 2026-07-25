@@ -22,7 +22,12 @@ const ROOM_DATA := {
 	"ranged": {
 		"path": "res://scenes/Rooms/04_basic_range_combat.tscn",
 		"position": Vector2(3840, 0),
-		"neighbors": ["melee"],
+		"neighbors": ["melee", "zig_zag"],
+	},
+	"zig_zag": {
+		"path": "res://scenes/Rooms/05_zig_zag_room.tscn",
+		"position": Vector2(5120, 0),
+		"neighbors": ["ranged"],
 	},
 }
 
