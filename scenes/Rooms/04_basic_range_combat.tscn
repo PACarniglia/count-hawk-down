@@ -49,7 +49,7 @@ position = Vector2(-600, 330)
 target_room_id = "melee"
 target_entry_id = "EntryPointRight"
 
-[node name="DoorToBoss" parent="." instance=ExtResource("6_door")]
+[node name="DoorToZigZag" parent="." instance=ExtResource("6_door")]
 position = Vector2(600, 330)
-target_room_id = "boss"
+target_room_id = "zig_zag"
 target_entry_id = "EntryPointLeft"

@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://cqfilpyx7k5g"]
+
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_room"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="2_turret"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="3_platform"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="4_door"]
+
+[node name="ReignOfFire" type="Node2D" unique_id=1624552722]
+script = ExtResource("1_room")
+room_id = "reign_of_fire"
+
+[node name="Ground" parent="." unique_id=1545447384 instance=ExtResource("3_platform")]
+position = Vector2(0, 394)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Ceiling" parent="." unique_id=694902721 instance=ExtResource("3_platform")]
+position = Vector2(0, -374)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallLeft" parent="." unique_id=338317822 instance=ExtResource("3_platform")]
+position = Vector2(-664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallRight" parent="." unique_id=489851099 instance=ExtResource("3_platform")]
+position = Vector2(664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CameraAnchor" type="Marker2D" parent="." unique_id=1420367436]
+position = Vector2(0, 10)
+
+[node name="EntryPointLeft" type="Marker2D" parent="." unique_id=2123346995]
+position = Vector2(-600, 352)
+
+[node name="EntryPointRight" type="Marker2D" parent="." unique_id=1206681021]
+position = Vector2(609, 343)
+
+[node name="DoorToZigZag" parent="." unique_id=2074193805 instance=ExtResource("4_door")]
+position = Vector2(-600, 330)
+target_room_id = "zig_zag"
+target_entry_id = "EntryPointRight"
+
+[node name="DoorToBoss" parent="." unique_id=1503223597 instance=ExtResource("4_door")]
+position = Vector2(600, 330)
+target_room_id = "boss"
+target_entry_id = "EntryPointLeft"
+
+[node name="Platform1" parent="." unique_id=1274160786 instance=ExtResource("3_platform")]
+position = Vector2(-360, 250)
+platform_size = Vector2(30, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform2" parent="." unique_id=586581697 instance=ExtResource("3_platform")]
+position = Vector2(220, 190)
+platform_size = Vector2(30, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform3" parent="." unique_id=850761746 instance=ExtResource("3_platform")]
+position = Vector2(-100, 100)
+platform_size = Vector2(30, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform6" parent="." unique_id=888139063 instance=ExtResource("3_platform")]
+position = Vector2(100, -180)
+platform_size = Vector2(30, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Turret1" parent="." unique_id=311341159 instance=ExtResource("2_turret")]
+position = Vector2(-360, 222)
+state_id = "reign_of_fire_turret_01"
+
+[node name="Turret2" parent="." unique_id=1389059558 instance=ExtResource("2_turret")]
+position = Vector2(220, 162)
+state_id = "reign_of_fire_turret_02"
+
+[node name="Turret3" parent="." unique_id=1314592032 instance=ExtResource("2_turret")]
+position = Vector2(-100, 72)
+state_id = "reign_of_fire_turret_03"
+
+[node name="Turret4" parent="." unique_id=320134212 instance=ExtResource("2_turret")]
+position = Vector2(100, -208)
+state_id = "reign_of_fire_turret_04"

@@ -22,12 +22,22 @@ const ROOM_DATA := {
 	"ranged": {
 		"path": "res://scenes/Rooms/04_basic_range_combat.tscn",
 		"position": Vector2(3840, 0),
-		"neighbors": ["melee", "boss"],
+		"neighbors": ["melee", "zig_zag"],
+	},
+	"zig_zag": {
+		"path": "res://scenes/Rooms/05_zig_zag_room.tscn",
+		"position": Vector2(5120, 0),
+		"neighbors": ["ranged", "reign_of_fire"],
+	},
+	"reign_of_fire": {
+		"path": "res://scenes/Rooms/06_reign_of_fire.tscn",
+		"position": Vector2(6400, 0),
+		"neighbors": ["zig_zag", "boss"],
 	},
 	"boss": {
 		"path": "res://scenes/Rooms/05_boss_room.tscn",
-		"position": Vector2(5120, 0),
-		"neighbors": ["ranged"],
+		"position": Vector2(7680, 0),
+		"neighbors": ["reign_of_fire"],
 	},
 }
 

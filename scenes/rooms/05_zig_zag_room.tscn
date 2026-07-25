@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://coq1gxrq883uo"]
+
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_5cu6s"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="3_s6g5y"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/enemy.tscn" id="4_5cu6s"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="4_872hs"]
+
+[node name="Node2D" type="Node2D" unique_id=764478236]
+script = ExtResource("1_5cu6s")
+room_id = "zig_zag"
+
+[node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("3_s6g5y")]
+position = Vector2(0, 394)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Ground2" parent="." unique_id=770021381 instance=ExtResource("3_s6g5y")]
+position = Vector2(0, -374)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallLeft" parent="." unique_id=1388344974 instance=ExtResource("3_s6g5y")]
+position = Vector2(-664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallRight" parent="." unique_id=1861132496 instance=ExtResource("3_s6g5y")]
+position = Vector2(664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CameraAnchor" type="Marker2D" parent="." unique_id=940273135]
+position = Vector2(0, 10)
+
+[node name="EntryPointLeft" type="Marker2D" parent="." unique_id=1150503863]
+position = Vector2(-600, 352)
+
+[node name="EntryPointRight" type="Marker2D" parent="." unique_id=806061329]
+position = Vector2(612, -134)
+
+[node name="DoorToRanged" parent="." unique_id=1214267379 instance=ExtResource("4_872hs")]
+position = Vector2(-600, 330)
+target_room_id = "ranged"
+target_entry_id = "EntryPointRight"
+
+[node name="DoorToReignOfFire" parent="." unique_id=1861671464 instance=ExtResource("4_872hs")]
+position = Vector2(610, -135)
+target_room_id = "reign_of_fire"
+target_entry_id = "EntryPointLeft"
+
+[node name="Platform" parent="." unique_id=521497987 instance=ExtResource("3_s6g5y")]
+position = Vector2(-139, 304)
+platform_size = Vector2(1000, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform2" parent="." unique_id=1307250411 instance=ExtResource("3_s6g5y")]
+position = Vector2(136, 232)
+platform_size = Vector2(1000, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform3" parent="." unique_id=921330795 instance=ExtResource("3_s6g5y")]
+position = Vector2(-137, 166)
+platform_size = Vector2(1000, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform4" parent="." unique_id=186506996 instance=ExtResource("3_s6g5y")]
+position = Vector2(139, 85)
+platform_size = Vector2(1000, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform5" parent="." unique_id=1996781300 instance=ExtResource("3_s6g5y")]
+position = Vector2(-138, 1)
+platform_size = Vector2(1000, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform6" parent="." unique_id=274517475 instance=ExtResource("3_s6g5y")]
+position = Vector2(139, -65)
+platform_size = Vector2(1000, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Enemy" parent="." unique_id=1743431268 instance=ExtResource("4_5cu6s")]
+position = Vector2(-461, 277)
+state_id = "zig_zag_enemy_01"
+
+[node name="Enemy2" parent="." unique_id=839315180 instance=ExtResource("4_5cu6s")]
+position = Vector2(552, 205)
+state_id = "zig_zag_enemy_02"
+
+[node name="Enemy3" parent="." unique_id=1183156837 instance=ExtResource("4_5cu6s")]
+position = Vector2(-582, 137)
+state_id = "zig_zag_enemy_03"
+
+[node name="Enemy4" parent="." unique_id=230127294 instance=ExtResource("4_5cu6s")]
+position = Vector2(431, 58)
+state_id = "zig_zag_enemy_04"
+
+[node name="Enemy5" parent="." unique_id=1713276313 instance=ExtResource("4_5cu6s")]
+position = Vector2(-541, -30)
+state_id = "zig_zag_enemy_05"
+
+[node name="Enemy6" parent="." unique_id=1249530318 instance=ExtResource("4_5cu6s")]
+position = Vector2(425, -94)
+state_id = "zig_zag_enemy_06"
