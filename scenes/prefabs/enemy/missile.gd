@@ -3,6 +3,7 @@ extends Area2D
 @export var speed: float = 220.0
 @export var turn_speed: float = 2.8
 @export var lifetime: float = 4.0
+@export var launch_direction: Vector2 = Vector2.UP
 
 var _velocity: Vector2 = Vector2.ZERO
 var _lifetime_timer: float = 0.0
@@ -11,9 +12,9 @@ var _player: Node2D = null
 
 func _ready() -> void:
 	_player = _find_player()
-	# Launch straight up, let homing steer it toward the player
-	_velocity = Vector2.UP * speed
-	rotation = Vector2.UP.angle()
+	# Launch in given direction; homing steers from there
+	_velocity = launch_direction.normalized() * speed
+	rotation = _velocity.angle()
 	# Defer connection one frame so spawner's collision shape doesn't fire immediately
 	call_deferred("_connect_signal")
 
@@ -39,11 +40,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node) -> void:
-	if not body.is_in_group("player"):
-		return
-	if body.has_method("take_damage"):
-		body.take_damage()
-	queue_free()
+	if body.is_in_group("player"):
+		if body.has_method("take_damage"):
+			body.take_damage()
+	if not body.is_in_group("enemy"):
+		queue_free()
 
 
 func _find_player() -> Node2D:

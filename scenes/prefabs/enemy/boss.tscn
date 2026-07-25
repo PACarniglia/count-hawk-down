@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scenes/prefabs/enemy/boss.gd" id="1_boss"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/missile.tscn" id="2_missile"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
+radius = 34.0
+
+[node name="Boss" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_boss")
+missile_scene = ExtResource("2_missile")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.686275, 0.129412, 0.854902, 1)
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+monitoring = true
+monitorable = true
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_hurt")
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

@@ -16,20 +16,12 @@ func set_entity_state(room_id: String, state_id: String, state: Dictionary) -> v
 
 
 func save_to_disk() -> Error:
-	var file := FileAccess.open("user://room_state.save", FileAccess.WRITE)
-	if file == null:
-		return FileAccess.get_open_error()
-	file.store_var(rooms, true)
+	# Intentionally disabled: state should not persist across app relaunches.
+	# We still keep `rooms` in memory for the current run.
 	return OK
 
 
 func load_from_disk() -> Error:
-	if not FileAccess.file_exists("user://room_state.save"):
-		return OK
-	var file := FileAccess.open("user://room_state.save", FileAccess.READ)
-	if file == null:
-		return FileAccess.get_open_error()
-	var loaded: Variant = file.get_var(true)
-	if loaded is Dictionary:
-		rooms = loaded
+	# Always start fresh each launch.
+	rooms = {}
 	return OK
