@@ -49,7 +49,7 @@ position = Vector2(-600, 352)
 [node name="EntryPointRight" type="Marker2D" parent="." unique_id=2037725910]
 position = Vector2(609, 343)
 
-[node name="DoorToRanged" parent="." unique_id=1553564454 instance=ExtResource("3_door")]
+[node name="DoorToReignOfFire" parent="." unique_id=1553564454 instance=ExtResource("3_door")]
 position = Vector2(-600, 330)
-target_room_id = "ranged"
+target_room_id = "reign_of_fire"
 target_entry_id = "EntryPointRight"

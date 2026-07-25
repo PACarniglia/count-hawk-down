@@ -27,12 +27,17 @@ const ROOM_DATA := {
 	"zig_zag": {
 		"path": "res://scenes/Rooms/05_zig_zag_room.tscn",
 		"position": Vector2(5120, 0),
-		"neighbors": ["ranged"],
+		"neighbors": ["ranged", "reign_of_fire"],
+	},
+	"reign_of_fire": {
+		"path": "res://scenes/Rooms/06_reign_of_fire.tscn",
+		"position": Vector2(6400, 0),
+		"neighbors": ["zig_zag", "boss"],
 	},
 	"boss": {
 		"path": "res://scenes/Rooms/05_boss_room.tscn",
 		"position": Vector2(7680, 0),
-		"neighbors": ["zig_zag"],
+		"neighbors": ["reign_of_fire"],
 	},
 }
 
