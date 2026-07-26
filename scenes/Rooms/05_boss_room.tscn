@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://bqj5s1m7s0w5n"]
 
-[ext_resource type="Script" path="res://scenes/Rooms/BossRoom.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://c7vyi3o0smtkv" path="res://scenes/Rooms/BossRoom.gd" id="1_room"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="2_platform"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/boss.tscn" id="4_boss"]
+[ext_resource type="PackedScene" uid="uid://bd8m7xdua4xwv" path="res://scenes/prefabs/enemy/boss.tscn" id="4_boss"]
 
-[node name="Node2D" type="Node2D" unique_id=562082982]
+[node name="Node2D2" type="Node2D" unique_id=562082982]
 script = ExtResource("1_room")
-room_id = "boss"
 boss_scene = ExtResource("4_boss")
+room_id = "boss"
 
 [node name="Ground" parent="." unique_id=1268826291 instance=ExtResource("2_platform")]
 position = Vector2(0, 394)

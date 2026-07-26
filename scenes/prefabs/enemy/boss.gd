@@ -246,6 +246,19 @@ func _setup_hp_bar_ui() -> void:
 	bar_fill.offset_bottom = hp_bar_height
 	root.add_child(bar_fill)
 
+	var label := Label.new()
+	label.text = "The Count (NOT DEAD??)"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.anchor_left = 0.0
+	label.anchor_right = 1.0
+	label.anchor_top = 0.0
+	label.anchor_bottom = 0.0
+	label.offset_left = 0.0
+	label.offset_right = 0.0
+	label.offset_top = -24.0
+	label.offset_bottom = -2.0
+	root.add_child(label)
+
 	_hp_ui_root = root
 	_hp_bar_fill = bar_fill
 
