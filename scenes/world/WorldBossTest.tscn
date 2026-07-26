@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://scenes/world/world.gd" id="1_1oml7"]
 [ext_resource type="PackedScene" uid="uid://dlpbohgxrj7o6" path="res://scenes/prefabs/player/player.tscn" id="2_6eebf"]
 [ext_resource type="Script" uid="uid://cklnuwtnfxeaw" path="res://scenes/world/RoomManager.gd" id="3_room_manager"]
+[ext_resource type="AudioStream" path="res://music/title_part_b1.mp3" id="4_gameplay_music"]
+[ext_resource type="AudioStream" path="res://music/Level.mp3" id="5_game_over_music"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_1oml7")
@@ -19,6 +21,12 @@ limit_bottom = 100000
 [node name="Player" parent="." instance=ExtResource("2_6eebf")]
 position = Vector2(0, 40)
 time_limit_seconds = 60.0
+
+[node name="GameplayMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gameplay_music")
+
+[node name="GameOverMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_game_over_music")
 
 [node name="RoomManager" type="Node" parent="."]
 script = ExtResource("3_room_manager")
@@ -81,5 +89,57 @@ text = "Time Remaining: 0.0s"
 horizontal_alignment = 1
 
 [node name="MainMenuButton" type="Button" parent="CanvasLayer/VictoryOverlay/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Back To Main Menu"
+
+[node name="GameOverOverlay" type="Control" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOverOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.62)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/GameOverOverlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -110.0
+offset_right = 230.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GameOverOverlay/Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -68.0
+offset_right = 166.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/GameOverOverlay/Panel/VBoxContainer"]
+layout_mode = 2
+text = "YOU DIED"
+horizontal_alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/GameOverOverlay/Panel/VBoxContainer"]
 layout_mode = 2
 text = "Back To Main Menu"
