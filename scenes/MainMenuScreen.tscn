@@ -37,12 +37,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "New Game"
 
-[node name="ContinueButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
+[node name="CreditsButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
 layout_mode = 2
 size_flags_horizontal = 3
-modulate = Color(0.45, 0.45, 0.45, 0.85)
-disabled = true
-text = "Continue"
+text = "Credits"
 
 [node name="SettingsButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
 layout_mode = 2
@@ -51,3 +49,4 @@ text = "Settings"
 
 [connection signal="pressed" from="MenuButtons/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MenuButtons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuButtons/CreditsButton" to="." method="_on_credits_button_pressed"]

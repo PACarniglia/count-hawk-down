@@ -32,6 +32,7 @@ const MISSILE_SFX_OPTIONS: Array[AudioStream] = [
 @export var shoot_shake_amplitude: float = 2.0
 @export var max_health: int = 8
 @export var hit_flash_duration: float = 0.16
+@export var iframes_duration: float = 0.5
 @export var hp_bar_width: float = 420.0
 @export var hp_bar_height: float = 20.0
 
@@ -44,6 +45,7 @@ var _player: Node2D = null
 var _rng := RandomNumberGenerator.new()
 var _health: int = 1
 var _hit_flash_timer: float = 0.0
+var _iframes_timer: float = 0.0
 @onready var _sprite := get_node_or_null("Sprite2D") as Sprite2D
 var _sprite_base_position: Vector2 = Vector2.ZERO
 var _hp_ui_root: Control = null
@@ -71,6 +73,7 @@ func _physics_process(delta: float) -> void:
 	_missile_timer -= delta
 	_shoot_anim_timer = maxf(_shoot_anim_timer - delta, 0.0)
 	_hit_flash_timer = maxf(_hit_flash_timer - delta, 0.0)
+	_iframes_timer = maxf(_iframes_timer - delta, 0.0)
 	if _sprite != null:
 		_sprite.modulate = Color(1.0, 0.35, 0.35, 1.0) if _hit_flash_timer > 0.0 else Color.WHITE
 
@@ -78,11 +81,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0.0, ground_friction * delta)
 		if _hop_timer <= 0.0:
 			_perform_hop()
-			_hop_timer = hop_cooldown
+			_hop_timer = _get_hop_cooldown()
 
 	if _missile_timer <= 0.0:
 		_fire_missile_barrage()
-		_missile_timer = missile_barrage_cooldown
+		_missile_timer = _get_missile_cooldown()
 
 	velocity.y = min(velocity.y + gravity * delta, max_fall_speed)
 	move_and_slide()
@@ -162,8 +165,11 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 func take_damage(amount: int = 1) -> void:
 	if amount <= 0:
 		return
+	if _iframes_timer > 0.0:
+		return
 	_health = max(_health - amount, 0)
 	_hit_flash_timer = maxf(hit_flash_duration, 0.01)
+	_iframes_timer = iframes_duration
 	_update_hp_bar_ui()
 	if _health <= 0:
 		die()
@@ -173,6 +179,25 @@ func die() -> void:
 	_play_sfx_detached(SFX_CANTLOSE)
 	_cleanup_hp_bar_ui()
 	queue_free()
+
+
+func _get_hop_cooldown() -> float:
+	var base_cooldown := hop_cooldown
+	if _is_phase_two():
+		return base_cooldown * 0.6
+	return base_cooldown
+
+
+func _get_missile_cooldown() -> float:
+	var base_cooldown := missile_barrage_cooldown
+	if _is_phase_two():
+		return base_cooldown * 0.6
+	return base_cooldown
+
+
+func _is_phase_two() -> bool:
+	var safe_max_health := maxi(max_health, 1)
+	return _health <= safe_max_health / 2
 
 
 func _exit_tree() -> void:

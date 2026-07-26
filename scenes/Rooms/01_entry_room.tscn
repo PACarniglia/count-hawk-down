@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_ffyoo"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_ehskd"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
+[ext_resource type="PackedScene" uid="uid://mh6or3kwpk8x" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
 script = ExtResource("1_ffyoo")
@@ -59,10 +59,10 @@ mouse_filter = 2
 
 [node name="TutorialControlsText" type="Label" parent="TutorialControlsBox" unique_id=60834560]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 16.0
-offset_right = 940.0
-offset_bottom = 114.0
+offset_left = 17.73276
+offset_top = 6.1576586
+offset_right = 937.7328
+offset_bottom = 127.15766
 text = "Basic Controls:
 WASD to move
 Left click to swing sword

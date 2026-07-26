@@ -10,7 +10,7 @@ script = ExtResource("1_aew8b")
 room_id = "ranged"
 
 [node name="Turret" parent="." unique_id=1249402457 instance=ExtResource("4_sb4u2")]
-position = Vector2(517, 354)
+position = Vector2(516, 345)
 state_id = "right_turret"
 
 [node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("5_lh0ja")]

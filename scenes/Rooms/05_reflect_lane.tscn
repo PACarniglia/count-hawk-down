@@ -57,7 +57,27 @@ platform_size = Vector2(260, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="LeftTurret" parent="." unique_id=1983828602 instance=ExtResource("4_turret")]
-position = Vector2(532, 347)
+position = Vector2(534, 344)
 fire_interval = 1.5
 missile_launch_direction = Vector2(-1, 0)
 state_id = "reflect_lane_turret_01"
+
+[node name="TutorialRulesBox" type="Panel" parent="." unique_id=244185175]
+z_index = 20
+offset_left = -342.0
+offset_top = 21.0
+offset_right = 698.0
+offset_bottom = 181.0
+scale = Vector2(0.6551724, 0.8)
+mouse_filter = 2
+
+[node name="TutorialRulesText" type="Label" parent="TutorialRulesBox" unique_id=1674442871]
+layout_mode = 0
+offset_left = 12.21051
+offset_top = 11.2500305
+offset_right = 1012.2105
+offset_bottom = 139.25003
+text = "Your blade is a tool of justice - patience and timing will be rewarded in kind."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

@@ -1,0 +1,71 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/CreditsScreen.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/FantasyMenuButton.tscn" id="2_fantasy_menu_button"]
+[ext_resource type="Texture2D" uid="uid://rgwobc77ihku" path="res://sprites/fantasy-ui-borders/Default/Transparent center/panel-transparent-center-000.png" id="3_panel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("3_panel")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.19255567, 0.1925557, 0.19255567, 0.81960785)
+
+[node name="CreditsScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = -160.0
+offset_right = 680.0
+offset_bottom = 160.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Panel/Margin/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Credits"
+
+[node name="Spacer" type="Control" parent="Panel/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 8)
+
+[node name="CreditsText" type="RichTextLabel" parent="Panel/Margin/Content"]
+layout_mode = 2
+size_flags_vertical = 3
+fit_content = true
+text = "A game by 1D10T5 Studios.\n\nZed — Music, Level Design, Programming\nJustin — Artwork, Animations, Programming\nPeter — Artwork, Animations, SFX, Level Design, Programming\nAidan — Music, Programming\nAlex - Screaming\n\nTools & Assets\nMade with Godot Engine\nUI and crosshair assets by Kenney (kenney.nl)\nFonts: Jim Nightshade, New Rocker (Google Fonts)"
+
+[node name="BackButton" parent="Panel/Margin/Content" instance=ExtResource("2_fantasy_menu_button")]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="Panel/Margin/Content/BackButton" to="." method="_on_back_button_pressed"]
