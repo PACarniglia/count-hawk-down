@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bd2ab8r6jw5jt"]
 
-[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_aew8b"]
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_aew8b"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="4_sb4u2"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_lh0ja"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
+[ext_resource type="PackedScene" uid="uid://mh6or3kwpk8x" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
 script = ExtResource("1_aew8b")
@@ -44,12 +44,28 @@ position = Vector2(-600, 352)
 [node name="EntryPointRight" type="Marker2D" parent="." unique_id=806061329]
 position = Vector2(609, 343)
 
-[node name="DoorToMelee" parent="." instance=ExtResource("6_door")]
+[node name="DoorToMelee" parent="." unique_id=1055867293 instance=ExtResource("6_door")]
 position = Vector2(-600, 330)
 target_room_id = "melee"
 target_entry_id = "EntryPointRight"
 
-[node name="DoorToZigZag" parent="." instance=ExtResource("6_door")]
+[node name="DoorToZigZag" parent="." unique_id=1115614865 instance=ExtResource("6_door")]
 position = Vector2(600, 330)
 target_room_id = "zig_zag"
 target_entry_id = "EntryPointLeft"
+
+[node name="Platform" parent="." unique_id=999290377 instance=ExtResource("5_lh0ja")]
+position = Vector2(-346, 346)
+platform_size = Vector2(256, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform2" parent="." unique_id=43332009 instance=ExtResource("5_lh0ja")]
+position = Vector2(58, 345)
+platform_size = Vector2(256, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform3" parent="." unique_id=802084680 instance=ExtResource("5_lh0ja")]
+position = Vector2(-140, 307)
+scale = Vector2(-0.16521741, 2.6572971)
+platform_size = Vector2(256, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)

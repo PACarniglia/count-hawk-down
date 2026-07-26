@@ -36,7 +36,7 @@ platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform" parent="." unique_id=1997893775 instance=ExtResource("5_mbpq8")]
-position = Vector2(-203, 238)
+position = Vector2(-206.99997, 258)
 rotation = -0.2617994
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
