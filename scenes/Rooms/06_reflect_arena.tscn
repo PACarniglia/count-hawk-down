@@ -1,81 +1,126 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://gu2ewil1h55b"]
 
-[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_room"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="2_platform"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="3_door"]
+[ext_resource type="PackedScene" uid="uid://mh6or3kwpk8x" path="res://scenes/prefabs/doors/Door.tscn" id="3_door"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="4_turret"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/enemy.tscn" id="5_5vv3l"]
 
-[node name="ReflectArena" type="Node2D"]
+[node name="ReflectArena" type="Node2D" unique_id=187829707]
 script = ExtResource("1_room")
 room_id = "reflect_arena"
 
-[node name="Ground" parent="." instance=ExtResource("2_platform")]
+[node name="Ground" parent="." unique_id=1334638415 instance=ExtResource("2_platform")]
 position = Vector2(0, 394)
 platform_size = Vector2(1376, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
-[node name="Ceiling" parent="." instance=ExtResource("2_platform")]
+[node name="Ceiling" parent="." unique_id=314162074 instance=ExtResource("2_platform")]
 position = Vector2(0, -374)
 platform_size = Vector2(1376, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
-[node name="WallLeft" parent="." instance=ExtResource("2_platform")]
+[node name="WallLeft" parent="." unique_id=943501684 instance=ExtResource("2_platform")]
 position = Vector2(-664, 10)
 rotation = 1.5708
 platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
-[node name="WallRight" parent="." instance=ExtResource("2_platform")]
+[node name="WallRight" parent="." unique_id=359581311 instance=ExtResource("2_platform")]
 position = Vector2(664, 10)
 rotation = 1.5708
 platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
-[node name="CameraAnchor" type="Marker2D" parent="."]
+[node name="CameraAnchor" type="Marker2D" parent="." unique_id=752861078]
 position = Vector2(0, 10)
 
-[node name="EntryPointLeft" type="Marker2D" parent="."]
-position = Vector2(-600, 352)
+[node name="EntryPointLeft" type="Marker2D" parent="." unique_id=672816256]
+position = Vector2(-611, -165)
 
-[node name="EntryPointRight" type="Marker2D" parent="."]
+[node name="EntryPointRight" type="Marker2D" parent="." unique_id=452086810]
 position = Vector2(600, 352)
 
-[node name="DoorToReflectLane" parent="." instance=ExtResource("3_door")]
-position = Vector2(-600, 330)
+[node name="DoorToReflectLane" parent="." unique_id=585421360 instance=ExtResource("3_door")]
+position = Vector2(-611, -187)
 target_room_id = "reflect_lane"
 target_entry_id = "EntryPointRight"
 
-[node name="DoorToZigZag" parent="." instance=ExtResource("3_door")]
+[node name="DoorToZigZag" parent="." unique_id=1262672751 instance=ExtResource("3_door")]
 position = Vector2(600, 330)
 target_room_id = "zig_zag"
 target_entry_id = "EntryPointLeft"
 
-[node name="UpperPlatform" parent="." instance=ExtResource("2_platform")]
-position = Vector2(0, 130)
+[node name="UpperPlatform" parent="." unique_id=1338783243 instance=ExtResource("2_platform")]
+position = Vector2(-538, 121.999985)
+scale = Vector2(0.78125, 24.717758)
 platform_size = Vector2(260, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
-[node name="CenterPlatform" parent="." instance=ExtResource("2_platform")]
-position = Vector2(0, 255)
+[node name="UpperPlatform2" parent="." unique_id=908273978 instance=ExtResource("2_platform")]
+position = Vector2(-242, -48.999996)
+scale = Vector2(0.6347656, 29.952349)
+platform_size = Vector2(260, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="UpperPlatform3" parent="." unique_id=754545236 instance=ExtResource("2_platform")]
+position = Vector2(395, 93)
+scale = Vector2(1.874768, 3.5523481)
+platform_size = Vector2(260, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="UpperPlatform4" parent="." unique_id=883776040 instance=ExtResource("2_platform")]
+position = Vector2(280, -40)
+scale = Vector2(1.874768, 3.5523481)
+platform_size = Vector2(260, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="UpperPlatform5" parent="." unique_id=428615382 instance=ExtResource("2_platform")]
+position = Vector2(52.000046, 87)
+scale = Vector2(-0.12522829, 3.253959)
+platform_size = Vector2(260, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="UpperPlatform6" parent="." unique_id=182507983 instance=ExtResource("2_platform")]
+position = Vector2(564.00006, -192.00002)
+scale = Vector2(-0.12522829, 3.253959)
+platform_size = Vector2(260, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CenterPlatform" parent="." unique_id=1534334340 instance=ExtResource("2_platform")]
+position = Vector2(-11, 147)
+scale = Vector2(0.24000001, 22.310001)
 platform_size = Vector2(380, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
-[node name="LeftTurretHigh" parent="." instance=ExtResource("4_turret")]
-position = Vector2(-520, -130)
-missile_launch_direction = Vector2(1, 0)
-state_id = "reflect_arena_turret_01"
-
-[node name="RightTurretHigh" parent="." instance=ExtResource("4_turret")]
-position = Vector2(520, -130)
-missile_launch_direction = Vector2(-1, 0)
+[node name="RightTurretHigh" parent="." unique_id=1426880040 instance=ExtResource("4_turret")]
+position = Vector2(565, -245)
+missile_launch_direction = Vector2(-1, 1)
 state_id = "reflect_arena_turret_02"
 
-[node name="LeftTurretLow" parent="." instance=ExtResource("4_turret")]
-position = Vector2(-500, 60)
-missile_launch_direction = Vector2(0.92, 0.4)
+[node name="LeftTurretLow" parent="." unique_id=958022426 instance=ExtResource("4_turret")]
+position = Vector2(71, 347)
+missile_launch_direction = Vector2(1, -1)
 state_id = "reflect_arena_turret_03"
 
-[node name="RightTurretLow" parent="." instance=ExtResource("4_turret")]
-position = Vector2(500, 60)
-missile_launch_direction = Vector2(-0.92, 0.4)
+[node name="LeftTurretLow2" parent="." unique_id=1999104643 instance=ExtResource("4_turret")]
+position = Vector2(54, 35)
+missile_launch_direction = Vector2(1, 0)
+state_id = "reflect_arena_turret_03"
+
+[node name="RightTurretLow" parent="." unique_id=174716776 instance=ExtResource("4_turret")]
+position = Vector2(541, 349)
+missile_launch_direction = Vector2(-0.92, -0.4)
 state_id = "reflect_arena_turret_04"
+
+[node name="Enemy" parent="." unique_id=863857788 instance=ExtResource("5_5vv3l")]
+position = Vector2(-392, 336)
+
+[node name="Enemy2" parent="." unique_id=1327530092 instance=ExtResource("5_5vv3l")]
+position = Vector2(-156, 341)
+
+[node name="Enemy3" parent="." unique_id=864509243 instance=ExtResource("5_5vv3l")]
+position = Vector2(200, -106)
+
+[node name="Enemy4" parent="." unique_id=1416102851 instance=ExtResource("5_5vv3l")]
+position = Vector2(244, 30)
