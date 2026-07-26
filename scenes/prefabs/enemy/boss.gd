@@ -103,8 +103,8 @@ func _fire_missile_barrage() -> void:
 		missile.set("launch_direction", dir)
 		missile.set("speed", missile_speed)
 		missile.set("turn_speed", missile_turn_speed)
-		get_tree().current_scene.add_child(missile)
 		missile.global_position = global_position + Vector2(lerp(-missile_spread * 0.5, missile_spread * 0.5, t), missile_spawn_height)
+		get_tree().current_scene.add_child(missile)
 
 
 func _update_animation() -> void:
@@ -155,6 +155,7 @@ func _play_sfx_detached(stream: AudioStream) -> void:
 		return
 	var player := AudioStreamPlayer2D.new()
 	player.stream = stream
+	player.bus = AudioSettings.SFX_BUS
 	player.global_position = global_position
 	scene.add_child(player)
 	player.finished.connect(player.queue_free)

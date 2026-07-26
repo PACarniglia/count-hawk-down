@@ -14,7 +14,7 @@ var _player: Node2D = null
 
 func _ready() -> void:
 	_player = _find_player()
-	_play_spawn_sfx()
+	call_deferred("_play_spawn_sfx")
 	# Launch in given direction; homing steers from there
 	_velocity = launch_direction.normalized() * speed
 	rotation = _velocity.angle()

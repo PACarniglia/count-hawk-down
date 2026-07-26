@@ -33,8 +33,8 @@ func _shoot() -> void:
 	if missile_scene == null:
 		return
 	var missile: Node = missile_scene.instantiate()
-	get_tree().current_scene.add_child(missile)
 	missile.global_position = global_position + spawn_offset
+	get_tree().current_scene.add_child(missile)
 
 
 func die() -> void:
