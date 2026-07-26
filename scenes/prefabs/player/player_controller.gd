@@ -43,6 +43,7 @@ var input_locked: bool = false
 
 @onready var countdown = $TimerLayer/Countdown
 @onready var sword_hitbox: Area2D = $SwordHitbox
+@onready var death_sound: AudioStreamPlayer2D = $DeathSound
 
 
 func _ready() -> void:
@@ -223,6 +224,7 @@ func _trigger_game_over(reason: String) -> void:
 	if is_game_over:
 		return
 	is_game_over = true
+	death_sound.play()
 	countdown.stop()
 	countdown.value = 0.0
 	game_over_requested.emit(reason)

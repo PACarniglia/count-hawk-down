@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c26wtxlhp0sqg"
+path="res://.godot/imported/Alex Scream Short.mp3-6acfe338e852aaee7c424e824f53a48a.mp3str"
+
+[deps]
+
+source_file="res://sounds/Alex Scream Short.mp3"
+dest_files=["res://.godot/imported/Alex Scream Short.mp3-6acfe338e852aaee7c424e824f53a48a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
