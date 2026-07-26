@@ -30,6 +30,10 @@ const MISSILE_SFX_OPTIONS: Array[AudioStream] = [
 @export var frame_size: Vector2i = Vector2i(64, 64)
 @export var shoot_frame_hold_time: float = 1.0
 @export var shoot_shake_amplitude: float = 2.0
+@export var max_health: int = 8
+@export var hit_flash_duration: float = 0.16
+@export var hp_bar_width: float = 420.0
+@export var hp_bar_height: float = 20.0
 
 @export var state_id: String
 
@@ -38,19 +42,25 @@ var _missile_timer: float = 0.0
 var _shoot_anim_timer: float = 0.0
 var _player: Node2D = null
 var _rng := RandomNumberGenerator.new()
+var _health: int = 1
+var _hit_flash_timer: float = 0.0
 @onready var _sprite := get_node_or_null("Sprite2D") as Sprite2D
 var _sprite_base_position: Vector2 = Vector2.ZERO
+var _hp_ui_root: Control = null
+var _hp_bar_fill: ColorRect = null
 
 
 func _ready() -> void:
-	add_to_group("room_persistent")
 	_player = _find_player()
 	_hop_timer = hop_cooldown
 	_missile_timer = missile_barrage_cooldown
 	_rng.randomize()
+	_health = maxi(max_health, 1)
 	if _sprite != null:
 		_sprite_base_position = _sprite.position
 		_set_frame(0)
+	_setup_hp_bar_ui()
+	_update_hp_bar_ui()
 
 
 func _physics_process(delta: float) -> void:
@@ -60,6 +70,9 @@ func _physics_process(delta: float) -> void:
 	_hop_timer -= delta
 	_missile_timer -= delta
 	_shoot_anim_timer = maxf(_shoot_anim_timer - delta, 0.0)
+	_hit_flash_timer = maxf(_hit_flash_timer - delta, 0.0)
+	if _sprite != null:
+		_sprite.modulate = Color(1.0, 0.35, 0.35, 1.0) if _hit_flash_timer > 0.0 else Color.WHITE
 
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, 0.0, ground_friction * delta)
@@ -113,10 +126,13 @@ func _update_animation() -> void:
 	if _sprite == null:
 		return
 
-	if _shoot_anim_timer > 0.0:
+	if _shoot_anim_timer > 0.0 or _hit_flash_timer > 0.0:
 		_set_frame(3)
-		var shake := Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0)) * shoot_shake_amplitude
-		_sprite.position = _sprite_base_position + shake
+		if _shoot_anim_timer > 0.0:
+			var shake := Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0)) * shoot_shake_amplitude
+			_sprite.position = _sprite_base_position + shake
+		else:
+			_sprite.position = _sprite_base_position
 		return
 
 	_sprite.position = _sprite_base_position
@@ -143,10 +159,24 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		player_killed.emit()
 
 
+func take_damage(amount: int = 1) -> void:
+	if amount <= 0:
+		return
+	_health = max(_health - amount, 0)
+	_hit_flash_timer = maxf(hit_flash_duration, 0.01)
+	_update_hp_bar_ui()
+	if _health <= 0:
+		die()
+
+
 func die() -> void:
 	_play_sfx_detached(SFX_CANTLOSE)
-	_save_removed_state()
+	_cleanup_hp_bar_ui()
 	queue_free()
+
+
+func _exit_tree() -> void:
+	_cleanup_hp_bar_ui()
 
 
 func _play_sfx_detached(stream: AudioStream) -> void:
@@ -164,19 +194,72 @@ func _play_sfx_detached(stream: AudioStream) -> void:
 	player.play()
 
 
-func _save_removed_state() -> void:
-	if state_id.is_empty():
-		return
-	var node: Node = get_parent()
-	while node != null:
-		if node is StreamedRoom:
-			RoomStateStore.set_entity_state(node.room_id, state_id, {"removed": true})
-			return
-		node = node.get_parent()
-
-
 func _find_player() -> Node2D:
 	var players := get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		return players[0] as Node2D
 	return null
+
+
+func _setup_hp_bar_ui() -> void:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var ui_layer := scene.get_node_or_null("CanvasLayer") as CanvasLayer
+	if ui_layer == null:
+		return
+
+	var root := Control.new()
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.anchor_left = 0.5
+	root.anchor_right = 0.5
+	root.anchor_top = 0.0
+	root.anchor_bottom = 0.0
+	root.offset_left = -hp_bar_width * 0.5
+	root.offset_right = hp_bar_width * 0.5
+	root.offset_top = 18.0
+	root.offset_bottom = 18.0 + hp_bar_height + 28.0
+	root.z_index = 220
+	ui_layer.add_child(root)
+
+	var bar_bg := ColorRect.new()
+	bar_bg.color = Color(0.84, 0.14, 0.14, 1.0)
+	bar_bg.anchor_left = 0.0
+	bar_bg.anchor_right = 1.0
+	bar_bg.anchor_top = 0.0
+	bar_bg.anchor_bottom = 0.0
+	bar_bg.offset_left = 0.0
+	bar_bg.offset_right = 0.0
+	bar_bg.offset_top = 0.0
+	bar_bg.offset_bottom = hp_bar_height
+	root.add_child(bar_bg)
+
+	var bar_fill := ColorRect.new()
+	bar_fill.color = Color(0.14, 0.82, 0.23, 1.0)
+	bar_fill.anchor_left = 0.0
+	bar_fill.anchor_right = 0.0
+	bar_fill.anchor_top = 0.0
+	bar_fill.anchor_bottom = 0.0
+	bar_fill.offset_left = 0.0
+	bar_fill.offset_right = hp_bar_width
+	bar_fill.offset_top = 0.0
+	bar_fill.offset_bottom = hp_bar_height
+	root.add_child(bar_fill)
+
+	_hp_ui_root = root
+	_hp_bar_fill = bar_fill
+
+
+func _update_hp_bar_ui() -> void:
+	if _hp_bar_fill == null:
+		return
+	var safe_max_health := maxi(max_health, 1)
+	var health_ratio := clampf(float(_health) / float(safe_max_health), 0.0, 1.0)
+	_hp_bar_fill.offset_right = hp_bar_width * health_ratio
+
+
+func _cleanup_hp_bar_ui() -> void:
+	if _hp_ui_root != null and is_instance_valid(_hp_ui_root):
+		_hp_ui_root.queue_free()
+	_hp_ui_root = null
+	_hp_bar_fill = null

@@ -38,7 +38,7 @@ position = Vector2(612, -253)
 
 [node name="DoorToRanged" parent="." unique_id=1214267379 instance=ExtResource("4_872hs")]
 position = Vector2(-600, 330)
-target_room_id = "ranged"
+target_room_id = "reflect_arena"
 target_entry_id = "EntryPointRight"
 
 [node name="DoorToReignOfFire" parent="." unique_id=1861671464 instance=ExtResource("4_872hs")]

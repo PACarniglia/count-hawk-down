@@ -14,6 +14,7 @@ static var _death_sfx_rng_ready := false
 @export var fire_interval: float = 2.5
 @export var missile_scene: PackedScene
 @export var spawn_offset: Vector2 = Vector2(0, -20)
+@export var missile_launch_direction: Vector2 = Vector2.UP
 @export var state_id: String
 
 var _fire_timer: float = 0.0
@@ -35,6 +36,7 @@ func _shoot() -> void:
 	if missile_scene == null:
 		return
 	var missile: Node = missile_scene.instantiate()
+	missile.set("launch_direction", missile_launch_direction)
 	missile.global_position = global_position + spawn_offset
 	get_tree().current_scene.add_child(missile)
 

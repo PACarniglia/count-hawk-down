@@ -24,21 +24,31 @@ const ROOM_DATA := {
 	"ranged": {
 		"path": "res://scenes/Rooms/04_basic_range_combat.tscn",
 		"position": Vector2(3840, 0),
-		"neighbors": ["melee", "zig_zag"],
+		"neighbors": ["melee", "reflect_lane"],
+	},
+	"reflect_lane": {
+		"path": "res://scenes/Rooms/05_reflect_lane.tscn",
+		"position": Vector2(5120, 0),
+		"neighbors": ["ranged", "reflect_arena"],
+	},
+	"reflect_arena": {
+		"path": "res://scenes/Rooms/06_reflect_arena.tscn",
+		"position": Vector2(6400, 0),
+		"neighbors": ["reflect_lane", "zig_zag"],
 	},
 	"zig_zag": {
 		"path": "res://scenes/Rooms/05_zig_zag_room.tscn",
-		"position": Vector2(5120, 0),
-		"neighbors": ["ranged", "reign_of_fire"],
+		"position": Vector2(7680, 0),
+		"neighbors": ["reflect_arena", "reign_of_fire"],
 	},
 	"reign_of_fire": {
 		"path": "res://scenes/Rooms/06_reign_of_fire.tscn",
-		"position": Vector2(6400, 0),
+		"position": Vector2(8960, 0),
 		"neighbors": ["zig_zag", "boss"],
 	},
 	"boss": {
 		"path": "res://scenes/Rooms/05_boss_room.tscn",
-		"position": Vector2(7680, 0),
+		"position": Vector2(10240, 0),
 		"neighbors": ["reign_of_fire"],
 	},
 }

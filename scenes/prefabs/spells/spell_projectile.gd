@@ -67,7 +67,7 @@ func _damage_enemy(enemy: Node2D) -> void:
 	if hit_targets.has(enemy):
 		return
 	hit_targets.append(enemy)
-	if enemy.has_method("die"):
-		enemy.die()
-	elif enemy.has_method("take_damage"):
+	if enemy.has_method("take_damage"):
 		enemy.take_damage(definition.damage)
+	elif enemy.has_method("die"):
+		enemy.die()

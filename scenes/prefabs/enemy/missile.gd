@@ -1,6 +1,8 @@
 extends Area2D
 
 const MISSILE_LAUNCH_SFX: AudioStream = preload("res://sounds/sfx/enemies/missilelaunch.wav")
+const FIREBALL_SHEET: Texture2D = preload("res://sprites/hero/fireball_spritesheet.png")
+const BOSS_SCRIPT_PATH := "res://scenes/prefabs/enemy/boss.gd"
 
 @export var speed: float = 220.0
 @export var turn_speed: float = 2.8
@@ -57,10 +59,13 @@ func reflect_from_player(player_position: Vector2, mouse_position: Vector2) -> v
 func _on_body_entered(body: Node) -> void:
 	if _is_reflected:
 		if body.is_in_group("enemy"):
-			if body.has_method("die"):
+			var is_boss := _is_boss(body)
+			if body.has_method("take_damage"):
+				body.take_damage(2 if is_boss else 1)
+			elif body.has_method("die"):
 				body.die()
-			elif body.has_method("take_damage"):
-				body.take_damage(1)
+			if is_boss:
+				_spawn_boss_reflect_explosion(global_position)
 			queue_free()
 			return
 		if body.is_in_group("player"):
@@ -95,3 +100,47 @@ func _play_spawn_sfx() -> void:
 	scene.add_child(audio_player)
 	audio_player.finished.connect(audio_player.queue_free)
 	audio_player.play()
+
+
+func _is_boss(node: Node) -> bool:
+	if node == null:
+		return false
+	var script := node.get_script() as Script
+	return script != null and script.resource_path == BOSS_SCRIPT_PATH
+
+
+func _spawn_boss_reflect_explosion(at_position: Vector2) -> void:
+	if FIREBALL_SHEET == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+
+	var atlas_a := AtlasTexture.new()
+	atlas_a.atlas = FIREBALL_SHEET
+	atlas_a.region = Rect2(0, 0, 32, 32)
+	var atlas_b := AtlasTexture.new()
+	atlas_b.atlas = FIREBALL_SHEET
+	atlas_b.region = Rect2(32, 0, 32, 32)
+
+	var frames := SpriteFrames.new()
+	frames.add_animation("explode")
+	frames.set_animation_loop("explode", true)
+	frames.set_animation_speed("explode", 14.0)
+	frames.add_frame("explode", atlas_a)
+	frames.add_frame("explode", atlas_b)
+
+	var explosion := AnimatedSprite2D.new()
+	explosion.sprite_frames = frames
+	explosion.animation = &"explode"
+	explosion.global_position = at_position
+	explosion.scale = Vector2(2.2, 2.2)
+	explosion.modulate = Color(1.0, 0.2, 0.2, 0.95)
+	scene.add_child(explosion)
+	explosion.play()
+
+	var tween := explosion.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(explosion, "scale", Vector2(3.2, 3.2), 0.18)
+	tween.tween_property(explosion, "modulate:a", 0.0, 0.18)
+	tween.finished.connect(explosion.queue_free)

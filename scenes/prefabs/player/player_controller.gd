@@ -496,9 +496,14 @@ func _on_sword_area_entered(area: Area2D) -> void:
 		_play_reflect_sfx_with_music_pause()
 		_trigger_reflect_hitstop()
 		return
-	if target.is_in_group("enemy") and target.has_method("die"):
-		target.die()
-		kill_enemy()
+	if target.is_in_group("enemy"):
+		if target.has_method("take_damage"):
+			target.take_damage(1)
+			kill_enemy()
+			return
+		if target.has_method("die"):
+			target.die()
+			kill_enemy()
 
 
 func _trigger_reflect_hitstop() -> void:
