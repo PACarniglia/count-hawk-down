@@ -2,6 +2,15 @@ extends CharacterBody2D
 
 signal player_killed
 
+const ENEMY_DEATH_SFX_OPTIONS: Array[AudioStream] = [
+	preload("res://sounds/sfx/enemies/enemydie1.wav"),
+	preload("res://sounds/sfx/enemies/enemydie2.wav"),
+	preload("res://sounds/sfx/enemies/enemydie3.wav"),
+]
+
+static var _death_sfx_rng := RandomNumberGenerator.new()
+static var _death_sfx_rng_ready := false
+
 @export var move_speed: float = 80.0
 @export var gravity: float = 1800.0
 @export var max_fall_speed: float = 1100.0
@@ -12,6 +21,7 @@ var _direction: float = 1.0
 
 func _ready() -> void:
 	add_to_group("room_persistent")
+	_ensure_death_sfx_rng()
 
 
 func _physics_process(delta: float) -> void:
@@ -54,8 +64,33 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 
 func die() -> void:
+	if not ENEMY_DEATH_SFX_OPTIONS.is_empty():
+		var death_sfx := ENEMY_DEATH_SFX_OPTIONS[_death_sfx_rng.randi_range(0, ENEMY_DEATH_SFX_OPTIONS.size() - 1)]
+		_play_sfx_detached(death_sfx)
 	_save_removed_state()
 	queue_free()
+
+
+func _ensure_death_sfx_rng() -> void:
+	if _death_sfx_rng_ready:
+		return
+	_death_sfx_rng.randomize()
+	_death_sfx_rng_ready = true
+
+
+func _play_sfx_detached(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var audio_player := AudioStreamPlayer2D.new()
+	audio_player.stream = stream
+	audio_player.bus = AudioSettings.SFX_BUS
+	audio_player.global_position = global_position
+	scene.add_child(audio_player)
+	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.play()
 
 
 func _save_removed_state() -> void:

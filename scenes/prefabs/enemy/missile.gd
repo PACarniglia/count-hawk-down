@@ -1,5 +1,7 @@
 extends Area2D
 
+const MISSILE_LAUNCH_SFX: AudioStream = preload("res://sounds/sfx/enemies/missilelaunch.wav")
+
 @export var speed: float = 220.0
 @export var turn_speed: float = 2.8
 @export var lifetime: float = 4.0
@@ -12,6 +14,7 @@ var _player: Node2D = null
 
 func _ready() -> void:
 	_player = _find_player()
+	_play_spawn_sfx()
 	# Launch in given direction; homing steers from there
 	_velocity = launch_direction.normalized() * speed
 	rotation = _velocity.angle()
@@ -52,3 +55,18 @@ func _find_player() -> Node2D:
 	if players.size() > 0:
 		return players[0] as Node2D
 	return null
+
+
+func _play_spawn_sfx() -> void:
+	if MISSILE_LAUNCH_SFX == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var audio_player := AudioStreamPlayer2D.new()
+	audio_player.stream = MISSILE_LAUNCH_SFX
+	audio_player.bus = AudioSettings.SFX_BUS
+	audio_player.global_position = global_position
+	scene.add_child(audio_player)
+	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.play()

@@ -2,6 +2,15 @@ extends CharacterBody2D
 
 signal player_killed
 
+const SFX_CANTLOSE: AudioStream = preload("res://sounds/sfx/boss/cantlose.wav")
+const SFX_HYA: AudioStream = preload("res://sounds/sfx/boss/hya.wav")
+const MISSILE_SFX_OPTIONS: Array[AudioStream] = [
+	preload("res://sounds/sfx/boss/dinner.wav"),
+	preload("res://sounds/sfx/boss/hammers.wav"),
+	preload("res://sounds/sfx/boss/ticktok.wav"),
+	preload("res://sounds/sfx/boss/timesup.wav"),
+]
+
 @export var gravity: float = 1800.0
 @export var max_fall_speed: float = 1200.0
 @export var hop_cooldown: float = 2.2
@@ -72,12 +81,17 @@ func _perform_hop() -> void:
 		horizontal_speed = clampf(delta_x / maxf(hop_target_air_time, 0.1), -hop_max_horizontal_speed, hop_max_horizontal_speed)
 	velocity.x = horizontal_speed
 	velocity.y = hop_vertical_velocity
+	if _rng.randi_range(1, 3) == 1:
+		_play_sfx_detached(SFX_HYA)
 
 
 func _fire_missile_barrage() -> void:
 	if missile_scene == null:
 		return
 	_shoot_anim_timer = shoot_frame_hold_time
+	if not MISSILE_SFX_OPTIONS.is_empty():
+		var missile_sfx := MISSILE_SFX_OPTIONS[_rng.randi_range(0, MISSILE_SFX_OPTIONS.size() - 1)]
+		_play_sfx_detached(missile_sfx)
 	var n := maxi(missile_count, 1)
 	for i in range(n):
 		var t := 0.5 if n == 1 else float(i) / float(n - 1)
@@ -128,8 +142,23 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 
 func die() -> void:
+	_play_sfx_detached(SFX_CANTLOSE)
 	_save_removed_state()
 	queue_free()
+
+
+func _play_sfx_detached(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var player := AudioStreamPlayer2D.new()
+	player.stream = stream
+	player.global_position = global_position
+	scene.add_child(player)
+	player.finished.connect(player.queue_free)
+	player.play()
 
 
 func _save_removed_state() -> void:
