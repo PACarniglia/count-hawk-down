@@ -64,6 +64,8 @@ func _on_body_entered(body: Node) -> void:
 				body.take_damage(2 if is_boss else 1)
 			elif body.has_method("die"):
 				body.die()
+			if body is Node and (body as Node).is_queued_for_deletion():
+				_award_reflect_kill_time()
 			if is_boss:
 				_spawn_boss_reflect_explosion(global_position)
 			queue_free()
@@ -144,3 +146,10 @@ func _spawn_boss_reflect_explosion(at_position: Vector2) -> void:
 	tween.tween_property(explosion, "scale", Vector2(3.2, 3.2), 0.18)
 	tween.tween_property(explosion, "modulate:a", 0.0, 0.18)
 	tween.finished.connect(explosion.queue_free)
+
+
+func _award_reflect_kill_time() -> void:
+	if not is_instance_valid(_player):
+		_player = _find_player()
+	if _player != null and _player.has_method("kill_enemy"):
+		_player.kill_enemy()
