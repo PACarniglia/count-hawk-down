@@ -7,8 +7,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xuv7t"]
 size = Vector2(64, 64)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
-radius = 34.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_biyll"]
+size = Vector2(66, 66)
 
 [node name="Boss" type="CharacterBody2D" unique_id=1276053345 groups=["enemy"]]
 script = ExtResource("1_boss")
@@ -27,6 +27,6 @@ region_rect = Rect2(0, 0, 64, 64)
 [node name="Hurtbox" type="Area2D" parent="." unique_id=437196551]
 
 [node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=1092369777]
-shape = SubResource("CircleShape2D_hurt")
+shape = SubResource("RectangleShape2D_biyll")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
