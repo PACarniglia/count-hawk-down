@@ -16,13 +16,19 @@ signal player_killed
 @export var missile_spawn_height: float = -20.0
 @export var missile_speed: float = 350.0
 @export var missile_turn_speed: float = 1.0
+@export var frame_size: Vector2i = Vector2i(64, 64)
+@export var shoot_frame_hold_time: float = 1.0
+@export var shoot_shake_amplitude: float = 2.0
 
 @export var state_id: String
 
 var _hop_timer: float = 0.0
 var _missile_timer: float = 0.0
+var _shoot_anim_timer: float = 0.0
 var _player: Node2D = null
 var _rng := RandomNumberGenerator.new()
+@onready var _sprite := get_node_or_null("Sprite2D") as Sprite2D
+var _sprite_base_position: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -31,6 +37,9 @@ func _ready() -> void:
 	_hop_timer = hop_cooldown
 	_missile_timer = missile_barrage_cooldown
 	_rng.randomize()
+	if _sprite != null:
+		_sprite_base_position = _sprite.position
+		_set_frame(0)
 
 
 func _physics_process(delta: float) -> void:
@@ -39,6 +48,7 @@ func _physics_process(delta: float) -> void:
 
 	_hop_timer -= delta
 	_missile_timer -= delta
+	_shoot_anim_timer = maxf(_shoot_anim_timer - delta, 0.0)
 
 	if is_on_floor():
 		velocity.x = move_toward(velocity.x, 0.0, ground_friction * delta)
@@ -52,7 +62,7 @@ func _physics_process(delta: float) -> void:
 
 	velocity.y = min(velocity.y + gravity * delta, max_fall_speed)
 	move_and_slide()
-	_update_facing()
+	_update_animation()
 
 
 func _perform_hop() -> void:
@@ -67,6 +77,7 @@ func _perform_hop() -> void:
 func _fire_missile_barrage() -> void:
 	if missile_scene == null:
 		return
+	_shoot_anim_timer = shoot_frame_hold_time
 	var n := maxi(missile_count, 1)
 	for i in range(n):
 		var t := 0.5 if n == 1 else float(i) / float(n - 1)
@@ -82,14 +93,31 @@ func _fire_missile_barrage() -> void:
 		missile.global_position = global_position + Vector2(lerp(-missile_spread * 0.5, missile_spread * 0.5, t), missile_spawn_height)
 
 
-func _update_facing() -> void:
-	var visual := get_node_or_null("Polygon2D") as Polygon2D
-	if visual == null:
+func _update_animation() -> void:
+	if _sprite == null:
 		return
-	if velocity.x > 6.0:
-		visual.scale.x = 1.0
-	elif velocity.x < -6.0:
-		visual.scale.x = -1.0
+
+	if _shoot_anim_timer > 0.0:
+		_set_frame(3)
+		var shake := Vector2(_rng.randf_range(-1.0, 1.0), _rng.randf_range(-1.0, 1.0)) * shoot_shake_amplitude
+		_sprite.position = _sprite_base_position + shake
+		return
+
+	_sprite.position = _sprite_base_position
+	if velocity.y < -20.0:
+		_set_frame(1)
+	elif velocity.y > 20.0 and not is_on_floor():
+		_set_frame(2)
+	else:
+		_set_frame(0)
+
+
+func _set_frame(frame_index: int) -> void:
+	if _sprite == null:
+		return
+	var frame_w := float(frame_size.x)
+	var frame_h := float(frame_size.y)
+	_sprite.region_rect = Rect2(frame_w * frame_index, 0.0, frame_w, frame_h)
 
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
