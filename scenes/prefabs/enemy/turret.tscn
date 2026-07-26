@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://ct3dnpe5ne2r0"]
 
-[ext_resource type="Script" path="res://scenes/prefabs/enemy/turret.gd" id="1_tur01"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/missile.tscn" id="2_mis01"]
-[ext_resource type="Texture2D" path="res://sprites/enemies/turret/badGuy2WALK_frame_1.png" id="3_turret_walk"]
+[ext_resource type="Script" uid="uid://utp8553eoxsj" path="res://scenes/prefabs/enemy/turret.gd" id="1_tur01"]
+[ext_resource type="PackedScene" uid="uid://b0yj3udoddbau" path="res://scenes/prefabs/enemy/missile.tscn" id="2_mis01"]
+[ext_resource type="Texture2D" uid="uid://dv80mrbxsu8v3" path="res://sprites/enemies/ranged/ranged.png" id="3_ev5k2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(42, 42)
@@ -10,20 +10,19 @@ size = Vector2(42, 42)
 [sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
 radius = 27.0
 
-[node name="Turret" type="StaticBody2D" groups=["enemy"]]
+[node name="Turret" type="StaticBody2D" unique_id=1051416396 groups=["enemy"]]
 script = ExtResource("1_tur01")
 missile_scene = ExtResource("2_mis01")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1284495139]
 shape = SubResource("RectangleShape2D_body")
 
-[node name="Visual" type="Sprite2D" parent="."]
-texture = ExtResource("3_turret_walk")
+[node name="Visual" type="Sprite2D" parent="." unique_id=1263238075]
 scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_ev5k2")
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1212239475]
 monitoring = false
-monitorable = true
 
-[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=2069526910]
 shape = SubResource("CircleShape2D_hit")
