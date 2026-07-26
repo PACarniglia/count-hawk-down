@@ -1,6 +1,8 @@
 class_name RoomManager
 extends Node
 
+const StreamedRoom = preload("res://scenes/world/Room.gd")
+
 signal transition_requested
 
 const ROOM_DATA := {

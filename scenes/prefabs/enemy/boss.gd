@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+const StreamedRoom = preload("res://scenes/world/Room.gd")
+
 signal player_killed
 
 const SFX_CANTLOSE: AudioStream = preload("res://sounds/sfx/boss/cantlose.wav")

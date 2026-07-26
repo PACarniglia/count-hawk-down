@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+const StreamedRoom = preload("res://scenes/world/Room.gd")
+
 const ENEMY_DEATH_SFX_OPTIONS: Array[AudioStream] = [
 	preload("res://sounds/sfx/enemies/enemydie1.wav"),
 	preload("res://sounds/sfx/enemies/enemydie2.wav"),
