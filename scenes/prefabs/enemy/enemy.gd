@@ -6,6 +6,7 @@ signal player_killed
 @export var gravity: float = 1800.0
 @export var max_fall_speed: float = 1100.0
 @export var state_id: String
+@onready var animation =$AnimationPlayer
 
 var _direction: float = 1.0
 
@@ -17,7 +18,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	velocity.x = _direction * move_speed
 	velocity.y = min(velocity.y + gravity * delta, max_fall_speed)
-
+	animation.play("bg1WALK")
 	move_and_slide()
 
 	# Flip at walls
@@ -56,6 +57,7 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 func die() -> void:
 	_save_removed_state()
 	queue_free()
+	animation.stop()
 
 
 func _save_removed_state() -> void:
