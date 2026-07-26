@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3 uid="uid://bd8m7xdua4xwv"]
 
-[ext_resource type="Script" path="res://scenes/prefabs/enemy/boss.gd" id="1_boss"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/missile.tscn" id="2_missile"]
+[ext_resource type="Script" uid="uid://ck1rbtx1dk7q0" path="res://scenes/prefabs/enemy/boss.gd" id="1_boss"]
+[ext_resource type="PackedScene" uid="uid://b0yj3udoddbau" path="res://scenes/prefabs/enemy/missile.tscn" id="2_missile"]
+[ext_resource type="Texture2D" uid="uid://48uk5vi0baeo" path="res://sprites/enemies/boss/boss_spritesheet.png" id="3_sprite"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(64, 64)
@@ -9,22 +10,22 @@ size = Vector2(64, 64)
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
 radius = 34.0
 
-[node name="Boss" type="CharacterBody2D" groups=["enemy"]]
+[node name="Boss" type="CharacterBody2D" unique_id=1276053345 groups=["enemy"]]
 script = ExtResource("1_boss")
 missile_scene = ExtResource("2_missile")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=978749333]
 shape = SubResource("RectangleShape2D_body")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(0.686275, 0.129412, 0.854902, 1)
-polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2119074827]
+texture = ExtResource("3_sprite")
+offset = Vector2(0, -4)
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
 
-[node name="Hurtbox" type="Area2D" parent="."]
-monitoring = true
-monitorable = true
+[node name="Hurtbox" type="Area2D" parent="." unique_id=437196551]
 
-[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox" unique_id=1092369777]
 shape = SubResource("CircleShape2D_hurt")
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

@@ -29,6 +29,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "New Game"
 
+[node name="BossTestButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Boss Room (Test)"
+
 [node name="ContinueButton" parent="MenuButtons" instance=ExtResource("2_fantasy_menu_button")]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -42,4 +47,5 @@ size_flags_horizontal = 3
 text = "Settings"
 
 [connection signal="pressed" from="MenuButtons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuButtons/BossTestButton" to="." method="_on_boss_test_button_pressed"]
 [connection signal="pressed" from="MenuButtons/PlayButton" to="." method="_on_play_button_pressed"]
