@@ -2,6 +2,7 @@ extends Control
 
 signal new_game_requested(start_room_id: String, start_entry_id: String)
 signal settings_requested
+signal credits_requested
 
 const LEVEL_OPTIONS := [
 	{"label": "01 - Entry", "room_id": "entry", "entry_id": "EntryPointLeft"},
@@ -31,3 +32,6 @@ func _on_play_button_pressed() -> void:
 
 func _on_settings_button_pressed() -> void:
 	settings_requested.emit()
+
+func _on_credits_button_pressed() -> void:
+	credits_requested.emit()

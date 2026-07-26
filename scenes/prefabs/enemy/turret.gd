@@ -23,6 +23,15 @@ var _fire_timer: float = 0.0
 func _ready() -> void:
 	add_to_group("room_persistent")
 	_ensure_death_sfx_rng()
+	_update_facing()
+
+
+func _update_facing() -> void:
+	if missile_launch_direction.x == 0.0:
+		return
+	var visual := get_node_or_null("Visual") as Sprite2D
+	if visual != null:
+		visual.flip_h = missile_launch_direction.x > 0.0
 
 
 func _physics_process(delta: float) -> void:
