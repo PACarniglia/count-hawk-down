@@ -211,6 +211,20 @@ func kill_enemy() -> void:
 	countdown.value += RandomNumberGenerator.new().randf_range(3.0, 10.0)
 
 
+func get_time_remaining() -> float:
+	return countdown.value
+
+
+func trigger_victory() -> void:
+	if is_game_over:
+		return
+	is_game_over = true
+	input_locked = true
+	countdown.stop()
+	_end_swing()
+	_set_visible(true)
+
+
 func _on_sword_area_entered(area: Area2D) -> void:
 	var parent := area.get_parent()
 	if parent == null:

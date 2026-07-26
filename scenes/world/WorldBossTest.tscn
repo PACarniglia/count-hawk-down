@@ -26,3 +26,60 @@ starting_room_id = "boss"
 starting_entry_id = "EntryPointLeft"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VictoryOverlay" type="Control" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/VictoryOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.62)
+
+[node name="Panel" type="Panel" parent="CanvasLayer/VictoryOverlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -110.0
+offset_right = 230.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VictoryOverlay/Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -68.0
+offset_right = 166.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/VictoryOverlay/Panel/VBoxContainer"]
+layout_mode = 2
+text = "YOU WIN"
+horizontal_alignment = 1
+
+[node name="TimeRemainingLabel" type="Label" parent="CanvasLayer/VictoryOverlay/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Time Remaining: 0.0s"
+horizontal_alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/VictoryOverlay/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Back To Main Menu"
