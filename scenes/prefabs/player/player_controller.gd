@@ -20,7 +20,7 @@ const FIREBALL_SFX_OPTIONS: Array[AudioStream] = [
 @export var friction: float = 2600.0
 @export var gravity: float = 1800.0
 @export var max_fall_speed: float = 1100.0
-@export var jump_velocity: float = -560.0
+@export var jump_velocity: float = -600.0
 @export var coyote_time: float = 0.10
 @export var jump_buffer_time: float = 0.10
 @export var jump_cut_multiplier: float = 0.45
@@ -28,12 +28,16 @@ const FIREBALL_SFX_OPTIONS: Array[AudioStream] = [
 @export var wall_slide_max_fall_speed: float = 180.0
 @export var wall_jump_horizontal_speed: float = 420.0
 @export var wall_jump_lock_time: float = 0.12
-@export var wall_coyote_time: float = 0.08
+@export var wall_coyote_time: float = 0.10
 @export var time_limit_seconds: float = 10.0
 @export var damage_penalty_seconds: float = 5.0
 @export var iframes_duration: float = 1.5
 @export var flash_interval: float = 0.1
 @export var sword_duration: float = 0.18
+@export var walk_animation_fps: float = 8.0
+@export var attack_animation_fps: float = 12.0
+@export var attack_visual_offset_px: float = 8.0
+@export var jump_spin_degrees_per_second: float = 1080.0
 @export var equipped_spell: SpellDefinition
 
 var coyote_timer: float = 0.0
@@ -50,17 +54,23 @@ var spell_cooldown_timer: float = 0.0
 var _facing: float = 1.0
 var _rng := RandomNumberGenerator.new()
 var input_locked: bool = false
+var _sprite_inverted: bool = false
 
 
 @onready var countdown = $TimerLayer/Countdown
 @onready var sword_hitbox: Area2D = $SwordHitbox
 @onready var death_sound: AudioStreamPlayer2D = $DeathSound
+@onready var hero_sprite: AnimatedSprite2D = $HeroSprite
 
 
 func _ready() -> void:
 	countdown.value = time_limit_seconds
 	countdown.expired.connect(_on_countdown_expired)
 	countdown.start()
+	if hero_sprite and hero_sprite.sprite_frames:
+		hero_sprite.sprite_frames.set_animation_speed("walk", walk_animation_fps)
+		hero_sprite.sprite_frames.set_animation_speed("attack", attack_animation_fps)
+	_set_sprite_inverted(false)
 	_rng.randomize()
 
 
@@ -77,9 +87,9 @@ func _physics_process(delta: float) -> void:
 		flash_timer -= delta
 		if flash_timer <= 0.0:
 			flash_timer = flash_interval
-			_set_visible(not _get_visual_visible())
+			_set_sprite_inverted(not _sprite_inverted)
 		if iframes_timer <= 0.0:
-			_set_visible(true)
+			_set_sprite_inverted(false)
 
 	spell_cooldown_timer = maxf(spell_cooldown_timer - delta, 0.0)
 
@@ -158,6 +168,12 @@ func _physics_process(delta: float) -> void:
 	velocity.y = min(velocity.y + current_gravity * delta, current_max_fall_speed)
 
 	move_and_slide()
+	var grounded_now := is_on_floor()
+	var on_wall_now := is_on_wall_only() and not grounded_now
+	var wall_normal_now := get_wall_normal() if on_wall_now else Vector2.ZERO
+	var wall_sliding_now := on_wall_now and input_axis != 0.0 and signf(input_axis) == -signf(wall_normal_now.x) and velocity.y > 0.0
+	var is_attacking_now := sword_timer > 0.0
+	_update_hero_sprite_visuals(grounded_now, wall_sliding_now, is_attacking_now, delta)
 
 
 func take_damage() -> void:
@@ -171,15 +187,62 @@ func take_damage() -> void:
 	flash_timer = flash_interval
 
 
-func _set_visible(v: bool) -> void:
-	var poly := get_node_or_null("Polygon2D") as Polygon2D
-	if poly:
-		poly.visible = v
+func _set_sprite_inverted(inverted: bool) -> void:
+	_sprite_inverted = inverted
+	if hero_sprite == null:
+		return
+	var shader_material := hero_sprite.material as ShaderMaterial
+	if shader_material:
+		shader_material.set_shader_parameter("invert_enabled", inverted)
 
 
-func _get_visual_visible() -> bool:
-	var poly := get_node_or_null("Polygon2D") as Polygon2D
-	return poly.visible if poly else true
+func _update_hero_sprite_visuals(on_floor: bool, wall_sliding: bool, is_attacking: bool, delta: float) -> void:
+	if hero_sprite == null:
+		return
+
+	hero_sprite.flip_h = _facing < 0.0
+	if is_attacking:
+		hero_sprite.rotation = 0.0
+		hero_sprite.offset = Vector2(attack_visual_offset_px * _facing, 0.0)
+		if hero_sprite.animation != &"attack":
+			hero_sprite.play("attack")
+		elif not hero_sprite.is_playing():
+			hero_sprite.play("attack")
+		return
+	hero_sprite.offset = Vector2.ZERO
+
+	if wall_sliding:
+		if hero_sprite.animation != &"wall_slide":
+			hero_sprite.animation = &"wall_slide"
+		hero_sprite.stop()
+		hero_sprite.frame = 0
+		hero_sprite.rotation = 0.0
+		return
+
+	if not on_floor:
+		if hero_sprite.animation != &"jump":
+			hero_sprite.animation = &"jump"
+		hero_sprite.stop()
+		hero_sprite.frame = 0
+		var spin_direction := _facing
+		if is_zero_approx(spin_direction):
+			spin_direction = 1.0
+		hero_sprite.rotation_degrees = wrapf(
+			hero_sprite.rotation_degrees + jump_spin_degrees_per_second * spin_direction * delta,
+			-180.0,
+			180.0
+		)
+		return
+
+	hero_sprite.rotation = 0.0
+	if absf(velocity.x) > 8.0:
+		if hero_sprite.animation != &"walk" or not hero_sprite.is_playing():
+			hero_sprite.play("walk")
+	else:
+		if hero_sprite.animation != &"walk":
+			hero_sprite.animation = &"walk"
+		hero_sprite.stop()
+		hero_sprite.frame = 0
 
 
 func _swing_sword() -> void:
@@ -190,9 +253,6 @@ func _swing_sword() -> void:
 		var sword_sfx := SWORD_SFX_OPTIONS[_rng.randi_range(0, SWORD_SFX_OPTIONS.size() - 1)]
 		_play_sfx_detached(sword_sfx)
 	sword_hitbox.position.x = 28.0 * _facing
-	var vis := sword_hitbox.get_node_or_null("SwordVisual") as Polygon2D
-	if vis:
-		vis.visible = true
 	sword_hitbox.monitoring = true
 
 
@@ -200,9 +260,6 @@ func _end_swing() -> void:
 	if sword_hitbox == null:
 		return
 	sword_hitbox.monitoring = false
-	var vis := sword_hitbox.get_node_or_null("SwordVisual") as Polygon2D
-	if vis:
-		vis.visible = false
 
 
 func _play_sfx_detached(stream: AudioStream) -> void:
@@ -255,7 +312,7 @@ func trigger_victory() -> void:
 	input_locked = true
 	countdown.stop()
 	_end_swing()
-	_set_visible(true)
+	_set_sprite_inverted(false)
 
 
 func _on_sword_area_entered(area: Area2D) -> void:
@@ -271,6 +328,7 @@ func _trigger_game_over(reason: String) -> void:
 	if is_game_over:
 		return
 	is_game_over = true
+	_set_sprite_inverted(false)
 	death_sound.play()
 	countdown.stop()
 	countdown.value = 0.0
