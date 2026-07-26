@@ -9,19 +9,30 @@ const BOSS_SCRIPT_PATH := "res://scenes/prefabs/enemy/boss.gd"
 @onready var victory_overlay: Control = $CanvasLayer/VictoryOverlay
 @onready var victory_time_label: Label = $CanvasLayer/VictoryOverlay/Panel/VBoxContainer/TimeRemainingLabel
 @onready var main_menu_button: Button = $CanvasLayer/VictoryOverlay/Panel/VBoxContainer/MainMenuButton
+@onready var game_over_overlay: Control = $CanvasLayer/GameOverOverlay
+@onready var game_over_main_menu_button: Button = $CanvasLayer/GameOverOverlay/Panel/VBoxContainer/MainMenuButton
+@onready var gameplay_music: AudioStreamPlayer = $GameplayMusic
+@onready var game_over_music: AudioStreamPlayer = $GameOverMusic
 
 var _boss_seen := false
-var _victory_shown := false
+var _end_screen_shown := false
 
 
 func _ready() -> void:
 	player.game_over_requested.connect(_on_player_game_over_requested)
 	victory_overlay.visible = false
+	game_over_overlay.visible = false
 	main_menu_button.pressed.connect(_on_main_menu_button_pressed)
+	game_over_main_menu_button.pressed.connect(_on_main_menu_button_pressed)
+	gameplay_music.bus = AudioSettings.MUSIC_BUS
+	game_over_music.bus = AudioSettings.MUSIC_BUS
+	gameplay_music.stream.loop = true
+	game_over_music.stream.loop = true
+	gameplay_music.play()
 
 
 func _process(_delta: float) -> void:
-	if _victory_shown:
+	if _end_screen_shown:
 		return
 	var boss := _find_alive_boss()
 	if boss != null:
@@ -32,8 +43,13 @@ func _process(_delta: float) -> void:
 
 
 func _on_player_game_over_requested(reason: String) -> void:
-	_victory_shown = true
+	_end_screen_shown = true
 	RoomStateStore.save_to_disk()
+	if gameplay_music.playing:
+		gameplay_music.stop()
+	if not game_over_music.playing:
+		game_over_music.play()
+	game_over_overlay.visible = true
 	game_over_requested.emit(reason)
 
 
@@ -48,10 +64,14 @@ func _find_alive_boss() -> Node:
 
 
 func _show_victory() -> void:
-	_victory_shown = true
+	_end_screen_shown = true
 	RoomStateStore.save_to_disk()
 	if player.has_method("trigger_victory"):
 		player.trigger_victory()
+	if game_over_music.playing:
+		game_over_music.stop()
+	if not gameplay_music.playing:
+		gameplay_music.play()
 	var time_remaining := 0.0
 	if player.has_method("get_time_remaining"):
 		time_remaining = player.get_time_remaining()
