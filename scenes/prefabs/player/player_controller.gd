@@ -463,7 +463,12 @@ func _cast_spell() -> void:
 	projectile.launch(equipped_spell, aim_direction)
 
 
-func kill_enemy() -> void:
+func kill_enemy(enemy: Node = null) -> void:
+	var boss_script_path := "res://scenes/prefabs/enemy/boss.gd"
+	if enemy != null:
+		var enemy_script := enemy.get_script() as Script
+		if enemy_script != null and enemy_script.resource_path == boss_script_path:
+			return
 	countdown.value += RandomNumberGenerator.new().randf_range(3.0, 10.0)
 
 
@@ -499,11 +504,11 @@ func _on_sword_area_entered(area: Area2D) -> void:
 	if target.is_in_group("enemy"):
 		if target.has_method("take_damage"):
 			target.take_damage(1)
-			kill_enemy()
+			kill_enemy(target)
 			return
 		if target.has_method("die"):
 			target.die()
-			kill_enemy()
+			kill_enemy(target)
 
 
 func _trigger_reflect_hitstop() -> void:
