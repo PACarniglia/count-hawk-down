@@ -3,6 +3,16 @@ extends CharacterBody2D
 signal game_over_requested(reason: String)
 
 const SpellDefinition = preload("res://scripts/spells/spell_definition.gd")
+const SWORD_SFX_OPTIONS: Array[AudioStream] = [
+	preload("res://sounds/sfx/player/sword1.wav"),
+	preload("res://sounds/sfx/player/sword2.wav"),
+	preload("res://sounds/sfx/player/sword3.wav"),
+]
+const FIREBALL_SFX_OPTIONS: Array[AudioStream] = [
+	preload("res://sounds/sfx/player/fireball1.wav"),
+	preload("res://sounds/sfx/player/fireball2.wav"),
+	preload("res://sounds/sfx/player/fireball3.wav"),
+]
 
 @export var move_speed: float = 260.0
 @export var ground_accel: float = 2200.0
@@ -38,6 +48,7 @@ var flash_timer: float = 0.0
 var sword_timer: float = 0.0
 var spell_cooldown_timer: float = 0.0
 var _facing: float = 1.0
+var _rng := RandomNumberGenerator.new()
 var input_locked: bool = false
 
 
@@ -50,6 +61,7 @@ func _ready() -> void:
 	countdown.value = time_limit_seconds
 	countdown.expired.connect(_on_countdown_expired)
 	countdown.start()
+	_rng.randomize()
 
 
 func _physics_process(delta: float) -> void:
@@ -174,6 +186,9 @@ func _swing_sword() -> void:
 	if sword_hitbox == null:
 		return
 	sword_timer = sword_duration
+	if not SWORD_SFX_OPTIONS.is_empty():
+		var sword_sfx := SWORD_SFX_OPTIONS[_rng.randi_range(0, SWORD_SFX_OPTIONS.size() - 1)]
+		_play_sfx_detached(sword_sfx)
 	sword_hitbox.position.x = 28.0 * _facing
 	var vis := sword_hitbox.get_node_or_null("SwordVisual") as Polygon2D
 	if vis:
@@ -190,6 +205,21 @@ func _end_swing() -> void:
 		vis.visible = false
 
 
+func _play_sfx_detached(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var audio_player := AudioStreamPlayer2D.new()
+	audio_player.stream = stream
+	audio_player.bus = AudioSettings.SFX_BUS
+	audio_player.global_position = global_position
+	scene.add_child(audio_player)
+	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.play()
+
+
 func _cast_spell() -> void:
 	if equipped_spell == null or equipped_spell.projectile_scene == null:
 		return
@@ -198,6 +228,9 @@ func _cast_spell() -> void:
 
 	countdown.value -= equipped_spell.time_cost
 	spell_cooldown_timer = equipped_spell.cooldown
+	if not FIREBALL_SFX_OPTIONS.is_empty():
+		var fireball_sfx := FIREBALL_SFX_OPTIONS[_rng.randi_range(0, FIREBALL_SFX_OPTIONS.size() - 1)]
+		_play_sfx_detached(fireball_sfx)
 	var projectile := equipped_spell.projectile_scene.instantiate()
 	get_tree().current_scene.add_child(projectile)
 	var aim_direction := global_position.direction_to(get_global_mouse_position())
