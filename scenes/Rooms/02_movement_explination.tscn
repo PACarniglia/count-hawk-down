@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_8giiw"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_ucvik"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
+[ext_resource type="PackedScene" uid="uid://mh6or3kwpk8x" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
 [node name="Node2D2" type="Node2D" unique_id=764478236]
 script = ExtResource("1_8giiw")
@@ -56,7 +56,7 @@ platform_size = Vector2(256, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform5" parent="." unique_id=1073544029 instance=ExtResource("5_ucvik")]
-position = Vector2(184, -147)
+position = Vector2(246, -148)
 rotation = 1.5707964
 platform_size = Vector2(400, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
