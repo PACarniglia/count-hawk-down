@@ -24,6 +24,9 @@ var _direction: float = 1.0
 func _ready() -> void:
 	add_to_group("room_persistent")
 	_ensure_death_sfx_rng()
+	var animated_visual := get_node_or_null("Visual") as AnimatedSprite2D
+	if animated_visual != null:
+		animated_visual.play("walk")
 
 
 func _physics_process(delta: float) -> void:
@@ -53,9 +56,17 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_facing() -> void:
-	var visual := get_node_or_null("Polygon2D") as Polygon2D
-	if visual != null:
-		visual.scale.x = _direction
+	var animated_visual := get_node_or_null("Visual") as AnimatedSprite2D
+	if animated_visual != null:
+		animated_visual.flip_h = _direction < 0.0
+		return
+	var sprite_visual := get_node_or_null("Visual") as Sprite2D
+	if sprite_visual != null:
+		sprite_visual.flip_h = _direction < 0.0
+		return
+	var node_visual := get_node_or_null("Visual") as Node2D
+	if node_visual != null:
+		node_visual.scale.x = absf(node_visual.scale.x) * _direction
 
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:

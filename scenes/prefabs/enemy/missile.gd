@@ -17,7 +17,7 @@ func _ready() -> void:
 	call_deferred("_play_spawn_sfx")
 	# Launch in given direction; homing steers from there
 	_velocity = launch_direction.normalized() * speed
-	rotation = _velocity.angle()
+	rotation = _velocity.angle() + PI
 	# Defer connection one frame so spawner's collision shape doesn't fire immediately
 	call_deferred("_connect_signal")
 
@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	global_position += _velocity * delta
 
 	# Rotate sprite to face movement direction
-	rotation = _velocity.angle()
+	rotation = _velocity.angle() + PI
 
 
 func _on_body_entered(body: Node) -> void:
