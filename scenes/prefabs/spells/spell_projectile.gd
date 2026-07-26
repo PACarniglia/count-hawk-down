@@ -67,7 +67,17 @@ func _damage_enemy(enemy: Node2D) -> void:
 	if hit_targets.has(enemy):
 		return
 	hit_targets.append(enemy)
-	if enemy.has_method("die"):
-		enemy.die()
-	elif enemy.has_method("take_damage"):
+	if enemy.has_method("take_damage"):
 		enemy.take_damage(definition.damage)
+	elif enemy.has_method("die"):
+		enemy.die()
+	if enemy is Node and (enemy as Node).is_queued_for_deletion():
+		_award_fireball_kill_time()
+
+
+func _award_fireball_kill_time() -> void:
+	for node in get_tree().get_nodes_in_group("player"):
+		var player := node as Node
+		if player != null and player.has_method("kill_enemy"):
+			player.kill_enemy()
+			return

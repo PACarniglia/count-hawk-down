@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="3_s6g5y"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/enemy.tscn" id="4_5cu6s"]
 [ext_resource type="PackedScene" uid="uid://mh6or3kwpk8x" path="res://scenes/prefabs/doors/Door.tscn" id="4_872hs"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="5_5m1os"]
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
 script = ExtResource("1_5cu6s")
@@ -11,11 +12,6 @@ room_id = "zig_zag"
 
 [node name="Ground" parent="." unique_id=2074432549 instance=ExtResource("3_s6g5y")]
 position = Vector2(0, 394)
-platform_size = Vector2(1376, 48)
-platform_color = Color(0.14902, 0.172549, 0.239216, 1)
-
-[node name="Ground2" parent="." unique_id=770021381 instance=ExtResource("3_s6g5y")]
-position = Vector2(0, -374)
 platform_size = Vector2(1376, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
@@ -42,7 +38,7 @@ position = Vector2(612, -253)
 
 [node name="DoorToRanged" parent="." unique_id=1214267379 instance=ExtResource("4_872hs")]
 position = Vector2(-600, 330)
-target_room_id = "ranged"
+target_room_id = "reflect_arena"
 target_entry_id = "EntryPointRight"
 
 [node name="DoorToReignOfFire" parent="." unique_id=1861671464 instance=ExtResource("4_872hs")]
@@ -112,7 +108,7 @@ platform_size = Vector2(256, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform8" parent="." unique_id=644215786 instance=ExtResource("3_s6g5y")]
-position = Vector2(505, -81.99999)
+position = Vector2(526, -59.999996)
 scale = Vector2(0.06666665, 1.8166667)
 platform_size = Vector2(256, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
@@ -129,3 +125,6 @@ position = Vector2(-350, -230)
 scale = Vector2(0.4426664, 0.4044244)
 platform_size = Vector2(256, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Turret" parent="." unique_id=1704949862 instance=ExtResource("5_5m1os")]
+position = Vector2(529, -214)

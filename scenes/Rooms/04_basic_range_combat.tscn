@@ -51,7 +51,7 @@ target_entry_id = "EntryPointRight"
 
 [node name="DoorToZigZag" parent="." unique_id=1115614865 instance=ExtResource("6_door")]
 position = Vector2(600, 330)
-target_room_id = "zig_zag"
+target_room_id = "reflect_lane"
 target_entry_id = "EntryPointLeft"
 
 [node name="Platform" parent="." unique_id=999290377 instance=ExtResource("5_lh0ja")]

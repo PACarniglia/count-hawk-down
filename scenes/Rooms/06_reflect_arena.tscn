@@ -1,0 +1,81 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_room"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="2_platform"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="4_turret"]
+
+[node name="ReflectArena" type="Node2D"]
+script = ExtResource("1_room")
+room_id = "reflect_arena"
+
+[node name="Ground" parent="." instance=ExtResource("2_platform")]
+position = Vector2(0, 394)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Ceiling" parent="." instance=ExtResource("2_platform")]
+position = Vector2(0, -374)
+platform_size = Vector2(1376, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallLeft" parent="." instance=ExtResource("2_platform")]
+position = Vector2(-664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="WallRight" parent="." instance=ExtResource("2_platform")]
+position = Vector2(664, 10)
+rotation = 1.5708
+platform_size = Vector2(816, 48)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CameraAnchor" type="Marker2D" parent="."]
+position = Vector2(0, 10)
+
+[node name="EntryPointLeft" type="Marker2D" parent="."]
+position = Vector2(-600, 352)
+
+[node name="EntryPointRight" type="Marker2D" parent="."]
+position = Vector2(600, 352)
+
+[node name="DoorToReflectLane" parent="." instance=ExtResource("3_door")]
+position = Vector2(-600, 330)
+target_room_id = "reflect_lane"
+target_entry_id = "EntryPointRight"
+
+[node name="DoorToZigZag" parent="." instance=ExtResource("3_door")]
+position = Vector2(600, 330)
+target_room_id = "zig_zag"
+target_entry_id = "EntryPointLeft"
+
+[node name="UpperPlatform" parent="." instance=ExtResource("2_platform")]
+position = Vector2(0, 130)
+platform_size = Vector2(260, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="CenterPlatform" parent="." instance=ExtResource("2_platform")]
+position = Vector2(0, 255)
+platform_size = Vector2(380, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="LeftTurretHigh" parent="." instance=ExtResource("4_turret")]
+position = Vector2(-520, -130)
+missile_launch_direction = Vector2(1, 0)
+state_id = "reflect_arena_turret_01"
+
+[node name="RightTurretHigh" parent="." instance=ExtResource("4_turret")]
+position = Vector2(520, -130)
+missile_launch_direction = Vector2(-1, 0)
+state_id = "reflect_arena_turret_02"
+
+[node name="LeftTurretLow" parent="." instance=ExtResource("4_turret")]
+position = Vector2(-500, 60)
+missile_launch_direction = Vector2(0.92, 0.4)
+state_id = "reflect_arena_turret_03"
+
+[node name="RightTurretLow" parent="." instance=ExtResource("4_turret")]
+position = Vector2(500, 60)
+missile_launch_direction = Vector2(-0.92, 0.4)
+state_id = "reflect_arena_turret_04"

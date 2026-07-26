@@ -8,9 +8,11 @@ const LEVEL_OPTIONS := [
 	{"label": "02 - Movement", "room_id": "movement", "entry_id": "EntryPointLeft"},
 	{"label": "03 - Melee", "room_id": "melee", "entry_id": "EntryPointLeft"},
 	{"label": "04 - Ranged", "room_id": "ranged", "entry_id": "EntryPointLeft"},
-	{"label": "05 - Zig Zag", "room_id": "zig_zag", "entry_id": "EntryPointLeft"},
-	{"label": "06 - Reign Of Fire", "room_id": "reign_of_fire", "entry_id": "EntryPointLeft"},
-	{"label": "07 - Boss", "room_id": "boss", "entry_id": "EntryPointLeft"},
+	{"label": "05 - Reflect Lane", "room_id": "reflect_lane", "entry_id": "EntryPointLeft"},
+	{"label": "06 - Reflect Arena", "room_id": "reflect_arena", "entry_id": "EntryPointLeft"},
+	{"label": "07 - Zig Zag", "room_id": "zig_zag", "entry_id": "EntryPointLeft"},
+	{"label": "08 - Reign Of Fire", "room_id": "reign_of_fire", "entry_id": "EntryPointLeft"},
+	{"label": "09 - Boss", "room_id": "boss", "entry_id": "EntryPointLeft"},
 ]
 
 @onready var level_select: OptionButton = $MenuButtons/LevelSelect
