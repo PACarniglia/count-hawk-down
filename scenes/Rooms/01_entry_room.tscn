@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bd6l6ib2vmrja"]
 
-[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_ffyoo"]
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_ffyoo"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_ehskd"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
@@ -31,25 +31,56 @@ platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform" parent="." unique_id=337303719 instance=ExtResource("5_ehskd")]
-position = Vector2(-263, 300)
+position = Vector2(-219, 225)
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform2" parent="." unique_id=1873404204 instance=ExtResource("5_ehskd")]
-position = Vector2(251, 300)
+position = Vector2(282, 144)
+scale = Vector2(1.9200001, 0.9811321)
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform3" parent="." unique_id=95075342 instance=ExtResource("5_ehskd")]
+position = Vector2(-503, 309.00003)
+scale = Vector2(0.32, 0.99999994)
+platform_size = Vector2(256, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="TutorialControlsBox" type="Panel" parent="." unique_id=1521879940]
+offset_left = -480.0
+offset_top = -350.0
+offset_right = 480.0
+offset_bottom = -220.0
+scale = Vector2(0.9586777, 0.97439545)
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 50)
+mouse_filter = 2
+
+[node name="TutorialControlsText" type="Label" parent="TutorialControlsBox" unique_id=60834560]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 940.0
+offset_bottom = 114.0
+text = "Basic Controls:
+WASD to move
+Left click to swing sword
+Right click fireball"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="CameraAnchor" type="Marker2D" parent="." unique_id=1994638864]
 position = Vector2(0, 10)
 
 [node name="EntryPointLeft" type="Marker2D" parent="." unique_id=1077264085]
-position = Vector2(-600, 352)
+position = Vector2(-589, -98)
 
 [node name="EntryPointRight" type="Marker2D" parent="." unique_id=1372063296]
 position = Vector2(609, 343)
 
-[node name="DoorToMovement" parent="." instance=ExtResource("6_door")]
+[node name="DoorToMovement" parent="." unique_id=789508024 instance=ExtResource("6_door")]
 position = Vector2(600, 330)
 target_room_id = "movement"
 target_entry_id = "EntryPointLeft"

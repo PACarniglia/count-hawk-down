@@ -36,17 +36,17 @@ platform_size = Vector2(100, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform2" parent="." unique_id=843468842 instance=ExtResource("5_ucvik")]
-position = Vector2(-293, 282)
+position = Vector2(-300, 247)
 platform_size = Vector2(100, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform3" parent="." unique_id=431991063 instance=ExtResource("5_ucvik")]
-position = Vector2(-144, 247)
+position = Vector2(-143, 186)
 platform_size = Vector2(100, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform7" parent="." unique_id=626084041 instance=ExtResource("5_ucvik")]
-position = Vector2(105, 208)
+position = Vector2(134, 172)
 platform_size = Vector2(300, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
@@ -56,16 +56,39 @@ platform_size = Vector2(256, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform5" parent="." unique_id=1073544029 instance=ExtResource("5_ucvik")]
-position = Vector2(185, -89)
+position = Vector2(184, -147)
 rotation = 1.5707964
 platform_size = Vector2(400, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform6" parent="." unique_id=700203403 instance=ExtResource("5_ucvik")]
-position = Vector2(347, 7)
+position = Vector2(376, -34)
 rotation = -1.5707964
 platform_size = Vector2(400, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="TutorialRulesBox" type="Panel" parent="." unique_id=1869109665]
+z_index = 20
+offset_left = -520.0
+offset_top = -180.0
+offset_right = 520.0
+offset_bottom = -20.0
+scale = Vector2(0.6551724, 0.8)
+mouse_filter = 2
+
+[node name="TutorialRulesText" type="Label" parent="TutorialRulesBox" unique_id=1518441707]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 1020.0
+offset_bottom = 144.0
+text = "Taking damage costs time
+Shooting fireball costs time
+EVERYTHING costs time
+Don't run out of time"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="CameraAnchor" type="Marker2D" parent="." unique_id=1692632476]
 position = Vector2(0, 10)

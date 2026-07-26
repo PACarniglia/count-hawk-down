@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b6m6ea8ioge67"]
 
-[ext_resource type="Script" path="res://scenes/world/Room.gd" id="1_4mqt4"]
+[ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_4mqt4"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/enemy.tscn" id="3_1wqyq"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="5_mbpq8"]
-[ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
+[ext_resource type="PackedScene" uid="uid://mh6or3kwpk8x" path="res://scenes/prefabs/doors/Door.tscn" id="6_door"]
 
 [node name="Node2D" type="Node2D" unique_id=764478236]
 script = ExtResource("1_4mqt4")
@@ -36,13 +36,13 @@ platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform" parent="." unique_id=1997893775 instance=ExtResource("5_mbpq8")]
-position = Vector2(-204, 290)
+position = Vector2(-206.99997, 258)
 rotation = -0.2617994
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform2" parent="." unique_id=1950475254 instance=ExtResource("5_mbpq8")]
-position = Vector2(192, 257)
+position = Vector2(185, 194)
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
@@ -55,12 +55,12 @@ position = Vector2(-600, 352)
 [node name="EntryPointRight" type="Marker2D" parent="." unique_id=1473887890]
 position = Vector2(609, 343)
 
-[node name="DoorToMovement" parent="." instance=ExtResource("6_door")]
+[node name="DoorToMovement" parent="." unique_id=1122180043 instance=ExtResource("6_door")]
 position = Vector2(-600, 330)
 target_room_id = "movement"
 target_entry_id = "EntryPointRight"
 
-[node name="DoorToRanged" parent="." instance=ExtResource("6_door")]
+[node name="DoorToRanged" parent="." unique_id=249811483 instance=ExtResource("6_door")]
 position = Vector2(600, 330)
 target_room_id = "ranged"
 target_entry_id = "EntryPointLeft"

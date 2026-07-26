@@ -38,7 +38,6 @@ var mouse_is_pressed := false
 const MAIN_MENU_SCREEN := preload("res://scenes/MainMenuScreen.tscn")
 const SETTINGS_SCREEN := preload("res://scenes/SettingsScreen.tscn")
 const WORLD_SCENE_PATH := "res://scenes/world/World.tscn"
-const WORLD_BOSS_TEST_SCENE_PATH := "res://scenes/world/WorldBossTest.tscn"
 
 func _ready() -> void:
 	_setup_cursor()
@@ -96,21 +95,13 @@ func show_main_menu() -> void:
 	_show_screen(MAIN_MENU_SCREEN.instantiate())
 	current_screen.connect(&"new_game_requested", start_new_game)
 	current_screen.connect(&"settings_requested", show_settings)
-	current_screen.connect(&"boss_test_requested", start_boss_room_test)
 
-func start_new_game() -> void:
+func start_new_game(start_room_id: String = "entry", start_entry_id: String = "EntryPointLeft") -> void:
+	RoomStateStore.set_start_override(start_room_id, start_entry_id)
 	call_deferred("_change_to_world")
-
-
-func start_boss_room_test() -> void:
-	call_deferred("_change_to_boss_test_world")
 
 func _change_to_world() -> void:
 	get_tree().change_scene_to_file(WORLD_SCENE_PATH)
-
-
-func _change_to_boss_test_world() -> void:
-	get_tree().change_scene_to_file(WORLD_BOSS_TEST_SCENE_PATH)
 
 func show_settings() -> void:
 	_show_screen(SETTINGS_SCREEN.instantiate())
