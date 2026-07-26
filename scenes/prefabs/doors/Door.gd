@@ -1,6 +1,8 @@
 class_name RoomDoor
 extends Area2D
 
+const RoomManager = preload("res://scenes/world/RoomManager.gd")
+
 @export var target_room_id: String
 @export var target_entry_id: String
 
