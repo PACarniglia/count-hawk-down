@@ -1,9 +1,32 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scenes/prefabs/spells/spell_projectile.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://sprites/hero/fireball_spritesheet.png" id="2_fireball_sheet"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fireball"]
-radius = 12.0
+radius = 18.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fireball_1"]
+atlas = ExtResource("2_fireball_sheet")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fireball_2"]
+atlas = ExtResource("2_fireball_sheet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fireball"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fireball_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fireball_2")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 6.0
+}]
 
 [node name="SpellProjectile" type="Area2D"]
 collision_layer = 0
@@ -12,9 +35,11 @@ monitoring = true
 monitorable = false
 script = ExtResource("1_script")
 
-[node name="FireballVisual" type="Polygon2D" parent="."]
-color = Color(1, 0.28, 0.08, 1)
-polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
+[node name="FireballVisual" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fireball")
+animation = &"fly"
+autoplay = "fly"
+scale = Vector2(1.5, 1.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_fireball")

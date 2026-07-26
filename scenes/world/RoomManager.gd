@@ -66,12 +66,25 @@ func _ready() -> void:
 
 func _start() -> void:
 	RoomStateStore.load_from_disk()
-	var room := load_room(starting_room_id)
-	var entry := room.get_entry(starting_entry_id)
+	var selected_start_room_id := starting_room_id
+	var selected_start_entry_id := starting_entry_id
+	var start_override := RoomStateStore.consume_start_override()
+	if not start_override.is_empty():
+		var override_room_id := str(start_override.get("room_id", ""))
+		if ROOM_DATA.has(override_room_id):
+			selected_start_room_id = override_room_id
+			selected_start_entry_id = str(start_override.get("entry_id", starting_entry_id))
+
+	var room := load_room(selected_start_room_id)
+	var entry := room.get_entry(selected_start_entry_id)
 	if entry == null:
-		push_error("Missing entry '%s' in room '%s'." % [starting_entry_id, starting_room_id])
+		entry = room.get_entry("EntryPointLeft")
+	if entry == null:
+		entry = room.get_entry("EntryPointRight")
+	if entry == null:
+		push_error("Missing entry '%s' in room '%s'." % [selected_start_entry_id, selected_start_room_id])
 		return
-	current_room_id = starting_room_id
+	current_room_id = selected_start_room_id
 	room.set_active(true)
 	player.global_position = entry.global_position
 	camera.global_position = room.camera_anchor.global_position

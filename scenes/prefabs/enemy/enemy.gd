@@ -42,10 +42,10 @@ func _physics_process(delta: float) -> void:
 
 	# Flip at platform edges — cast a short ray downward just ahead of the foot
 	var space := get_world_2d().direct_space_state
-	var half_w: float = 14.0
+	var half_w: float = 21.0
 	var probe_x: float = global_position.x + _direction * half_w
-	var probe_from := Vector2(probe_x, global_position.y + 16.0)
-	var probe_to := Vector2(probe_x, global_position.y + 40.0)
+	var probe_from := Vector2(probe_x, global_position.y + 24.0)
+	var probe_to := Vector2(probe_x, global_position.y + 60.0)
 	var query := PhysicsRayQueryParameters2D.create(probe_from, probe_to)
 	query.exclude = [self]
 	var result := space.intersect_ray(query)

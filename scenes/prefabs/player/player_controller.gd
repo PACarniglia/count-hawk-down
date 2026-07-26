@@ -36,7 +36,7 @@ const FIREBALL_SFX_OPTIONS: Array[AudioStream] = [
 @export var sword_duration: float = 0.18
 @export var walk_animation_fps: float = 8.0
 @export var attack_animation_fps: float = 12.0
-@export var attack_visual_offset_px: float = 8.0
+@export var attack_visual_offset_px: float = 12.0
 @export var jump_spin_degrees_per_second: float = 1080.0
 @export var equipped_spell: SpellDefinition
 
@@ -252,7 +252,7 @@ func _swing_sword() -> void:
 	if not SWORD_SFX_OPTIONS.is_empty():
 		var sword_sfx := SWORD_SFX_OPTIONS[_rng.randi_range(0, SWORD_SFX_OPTIONS.size() - 1)]
 		_play_sfx_detached(sword_sfx)
-	sword_hitbox.position.x = 28.0 * _facing
+	sword_hitbox.position.x = 42.0 * _facing
 	sword_hitbox.monitoring = true
 
 
@@ -293,7 +293,7 @@ func _cast_spell() -> void:
 	var aim_direction := global_position.direction_to(get_global_mouse_position())
 	if aim_direction == Vector2.ZERO:
 		aim_direction = Vector2(_facing, 0.0)
-	projectile.global_position = global_position + aim_direction * 24.0
+	projectile.global_position = global_position + aim_direction * 36.0
 	projectile.launch(equipped_spell, aim_direction)
 
 

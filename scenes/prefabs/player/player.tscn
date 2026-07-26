@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c26wtxlhp0sqg" path="res://sounds/Alex Scream Short.mp3" id="5_g75l7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bxabp"]
-size = Vector2(16, 32)
+size = Vector2(24, 48)
 
 [sub_resource type="Shader" id="Shader_hero_invert"]
 code = "shader_type canvas_item;
@@ -94,7 +94,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sword"]
-height = 40.0
+height = 60.0
+radius = 6.0
 
 [node name="Player" type="CharacterBody2D" unique_id=740720376 groups=["player"]]
 script = ExtResource("1_ctab2")
@@ -107,6 +108,7 @@ shape = SubResource("RectangleShape2D_bxabp")
 material = SubResource("ShaderMaterial_hero_invert")
 sprite_frames = SubResource("SpriteFrames_hero")
 animation = &"walk"
+scale = Vector2(1.5, 1.5)
 
 [node name="TimerLayer" type="CanvasLayer" parent="." unique_id=1973375906]
 layer = 2
@@ -115,7 +117,7 @@ layer = 2
 randomize_on_ready = false
 
 [node name="SwordHitbox" type="Area2D" parent="." unique_id=2075970436]
-position = Vector2(28, 0)
+position = Vector2(42, 0)
 monitoring = false
 monitorable = false
 

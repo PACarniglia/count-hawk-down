@@ -6,11 +6,11 @@
 [ext_resource type="Texture2D" path="res://sprites/enemies/basic/badGuyWALK_frame_3.png" id="4_walk3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
-radius = 14.0
-height = 36.0
+radius = 21.0
+height = 54.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
-radius = 18.0
+radius = 27.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_enemy_walk"]
 animations = [{
@@ -39,6 +39,7 @@ shape = SubResource("CapsuleShape2D_body")
 sprite_frames = SubResource("SpriteFrames_enemy_walk")
 animation = &"walk"
 autoplay = "walk"
+scale = Vector2(1.5, 1.5)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 monitoring = true

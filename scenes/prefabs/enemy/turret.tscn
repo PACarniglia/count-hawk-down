@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" path="res://sprites/enemies/turret/badGuy2WALK_frame_1.png" id="3_turret_walk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(28, 28)
+size = Vector2(42, 42)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hit"]
-radius = 18.0
+radius = 27.0
 
 [node name="Turret" type="StaticBody2D" groups=["enemy"]]
 script = ExtResource("1_tur01")
@@ -19,6 +19,7 @@ shape = SubResource("RectangleShape2D_body")
 
 [node name="Visual" type="Sprite2D" parent="."]
 texture = ExtResource("3_turret_walk")
+scale = Vector2(1.5, 1.5)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 monitoring = false

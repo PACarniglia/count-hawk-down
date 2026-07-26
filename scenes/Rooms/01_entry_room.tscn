@@ -31,12 +31,19 @@ platform_size = Vector2(816, 48)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform" parent="." unique_id=337303719 instance=ExtResource("5_ehskd")]
-position = Vector2(-263, 300)
+position = Vector2(-219, 225)
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform2" parent="." unique_id=1873404204 instance=ExtResource("5_ehskd")]
-position = Vector2(251, 300)
+position = Vector2(282, 144)
+scale = Vector2(1.9200001, 0.9811321)
+platform_size = Vector2(256, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform3" parent="." unique_id=95075342 instance=ExtResource("5_ehskd")]
+position = Vector2(-503, 309.00003)
+scale = Vector2(0.32, 0.99999994)
 platform_size = Vector2(256, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
@@ -68,7 +75,7 @@ autowrap_mode = 2
 position = Vector2(0, 10)
 
 [node name="EntryPointLeft" type="Marker2D" parent="." unique_id=1077264085]
-position = Vector2(0, -100)
+position = Vector2(-589, -98)
 
 [node name="EntryPointRight" type="Marker2D" parent="." unique_id=1372063296]
 position = Vector2(609, 343)
