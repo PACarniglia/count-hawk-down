@@ -42,3 +42,4 @@ size_flags_horizontal = 3
 text = "Settings"
 
 [connection signal="pressed" from="MenuButtons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuButtons/PlayButton" to="." method="_on_play_button_pressed"]
