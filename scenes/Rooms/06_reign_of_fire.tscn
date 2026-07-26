@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://lwkwjbnto4et" path="res://scenes/world/Room.gd" id="1_room"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/turret.tscn" id="2_turret"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/enemy/enemy.tscn" id="3_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/platform/platform.tscn" id="3_platform"]
 [ext_resource type="PackedScene" path="res://scenes/prefabs/doors/Door.tscn" id="4_door"]
 
@@ -51,37 +52,127 @@ target_room_id = "boss"
 target_entry_id = "EntryPointLeft"
 
 [node name="Platform1" parent="." unique_id=1274160786 instance=ExtResource("3_platform")]
-position = Vector2(-360, 250)
+position = Vector2(-547, 89)
 platform_size = Vector2(30, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform2" parent="." unique_id=586581697 instance=ExtResource("3_platform")]
-position = Vector2(220, 190)
+position = Vector2(499, 89)
 platform_size = Vector2(30, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform3" parent="." unique_id=850761746 instance=ExtResource("3_platform")]
-position = Vector2(-100, 100)
+position = Vector2(-235, 89)
 platform_size = Vector2(30, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Platform6" parent="." unique_id=888139063 instance=ExtResource("3_platform")]
-position = Vector2(100, -180)
+position = Vector2(156, 89)
 platform_size = Vector2(30, 20)
 platform_color = Color(0.14902, 0.172549, 0.239216, 1)
 
 [node name="Turret1" parent="." unique_id=311341159 instance=ExtResource("2_turret")]
-position = Vector2(-360, 222)
+position = Vector2(-547, 61)
 state_id = "reign_of_fire_turret_01"
 
 [node name="Turret2" parent="." unique_id=1389059558 instance=ExtResource("2_turret")]
-position = Vector2(220, 162)
+position = Vector2(499, 61)
 state_id = "reign_of_fire_turret_02"
 
 [node name="Turret3" parent="." unique_id=1314592032 instance=ExtResource("2_turret")]
-position = Vector2(-100, 72)
+position = Vector2(-235, 61)
 state_id = "reign_of_fire_turret_03"
 
 [node name="Turret4" parent="." unique_id=320134212 instance=ExtResource("2_turret")]
-position = Vector2(100, -208)
+position = Vector2(156, 61)
 state_id = "reign_of_fire_turret_04"
+
+[node name="Enemy1" parent="." unique_id=989384692 instance=ExtResource("3_enemy")]
+position = Vector2(-159, 350)
+state_id = "reign_of_fire_enemy_01"
+
+[node name="Enemy2" parent="." unique_id=1003426102 instance=ExtResource("3_enemy")]
+position = Vector2(389, 348)
+state_id = "reign_of_fire_enemy_02"
+
+[node name="Platform" parent="." unique_id=1126775079 instance=ExtResource("3_platform")]
+position = Vector2(-449, 357)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform4" parent="." unique_id=1988773646 instance=ExtResource("3_platform")]
+position = Vector2(-323, 243)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform5" parent="." unique_id=1766995621 instance=ExtResource("3_platform")]
+position = Vector2(-344, 261)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform7" parent="." unique_id=1866437323 instance=ExtResource("3_platform")]
+position = Vector2(-364, 278)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform8" parent="." unique_id=2034817499 instance=ExtResource("3_platform")]
+position = Vector2(-386, 295)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform9" parent="." unique_id=841746702 instance=ExtResource("3_platform")]
+position = Vector2(-408, 317)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform10" parent="." unique_id=511676354 instance=ExtResource("3_platform")]
+position = Vector2(-428, 338)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform11" parent="." unique_id=1736706205 instance=ExtResource("3_platform")]
+position = Vector2(-253.99998, 302)
+rotation = 0.7853982
+platform_size = Vector2(180, 10)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform12" parent="." unique_id=1266874266 instance=ExtResource("3_platform")]
+position = Vector2(93, 358)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform13" parent="." unique_id=399339394 instance=ExtResource("3_platform")]
+position = Vector2(219, 244)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform14" parent="." unique_id=414360740 instance=ExtResource("3_platform")]
+position = Vector2(198, 262)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform15" parent="." unique_id=2045914556 instance=ExtResource("3_platform")]
+position = Vector2(178, 279)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform16" parent="." unique_id=71174228 instance=ExtResource("3_platform")]
+position = Vector2(156, 296)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform17" parent="." unique_id=103136866 instance=ExtResource("3_platform")]
+position = Vector2(134, 318)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform18" parent="." unique_id=57122529 instance=ExtResource("3_platform")]
+position = Vector2(114, 339)
+platform_size = Vector2(20, 20)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
+
+[node name="Platform19" parent="." unique_id=437990432 instance=ExtResource("3_platform")]
+position = Vector2(288, 303)
+rotation = 0.7853982
+platform_size = Vector2(180, 10)
+platform_color = Color(0.14902, 0.172549, 0.239216, 1)
