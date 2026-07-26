@@ -242,8 +242,8 @@ func _setup_hp_bar_ui() -> void:
 	root.anchor_bottom = 0.0
 	root.offset_left = -hp_bar_width * 0.5
 	root.offset_right = hp_bar_width * 0.5
-	root.offset_top = 18.0
-	root.offset_bottom = 18.0 + hp_bar_height + 28.0
+	root.offset_top = 0.0
+	root.offset_bottom = hp_bar_height
 	root.z_index = 220
 	ui_layer.add_child(root)
 
@@ -252,11 +252,7 @@ func _setup_hp_bar_ui() -> void:
 	bar_bg.anchor_left = 0.0
 	bar_bg.anchor_right = 1.0
 	bar_bg.anchor_top = 0.0
-	bar_bg.anchor_bottom = 0.0
-	bar_bg.offset_left = 0.0
-	bar_bg.offset_right = 0.0
-	bar_bg.offset_top = 0.0
-	bar_bg.offset_bottom = hp_bar_height
+	bar_bg.anchor_bottom = 1.0
 	root.add_child(bar_bg)
 
 	var bar_fill := ColorRect.new()
@@ -264,25 +260,9 @@ func _setup_hp_bar_ui() -> void:
 	bar_fill.anchor_left = 0.0
 	bar_fill.anchor_right = 0.0
 	bar_fill.anchor_top = 0.0
-	bar_fill.anchor_bottom = 0.0
-	bar_fill.offset_left = 0.0
+	bar_fill.anchor_bottom = 1.0
 	bar_fill.offset_right = hp_bar_width
-	bar_fill.offset_top = 0.0
-	bar_fill.offset_bottom = hp_bar_height
 	root.add_child(bar_fill)
-
-	var label := Label.new()
-	label.text = "The Count (NOT DEAD??)"
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.anchor_left = 0.0
-	label.anchor_right = 1.0
-	label.anchor_top = 0.0
-	label.anchor_bottom = 0.0
-	label.offset_left = 0.0
-	label.offset_right = 0.0
-	label.offset_top = -24.0
-	label.offset_bottom = -2.0
-	root.add_child(label)
 
 	_hp_ui_root = root
 	_hp_bar_fill = bar_fill

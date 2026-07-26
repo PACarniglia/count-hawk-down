@@ -44,3 +44,31 @@ position = Vector2(-600, 352)
 
 [node name="EntryPointRight" type="Marker2D" parent="." unique_id=2037725910]
 position = Vector2(609, 343)
+
+[node name="BossTitle" type="Label" parent="." unique_id=7582486]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -30.0
+offset_right = 200.0
+text = "PURPLE BUBBLE"
+horizontal_alignment = 1
+
+[node name="BossSubtitle" type="Label" parent="." unique_id=1479505954]
+modulate = Color(0.8, 0.8, 0.8, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -301.0
+offset_top = -4.0
+offset_right = 299.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ex-Girlfriend of Count Carl Gustave of Mannheim"
+horizontal_alignment = 1
