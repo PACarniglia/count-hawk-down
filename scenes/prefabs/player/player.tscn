@@ -93,9 +93,8 @@ animations = [{
 "speed": 1.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sword"]
-height = 60.0
-radius = 6.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sword"]
+size = Vector2(16, 36)
 
 [node name="Player" type="CharacterBody2D" unique_id=740720376 groups=["player"]]
 script = ExtResource("1_ctab2")
@@ -122,8 +121,7 @@ monitoring = false
 monitorable = false
 
 [node name="SwordShape" type="CollisionShape2D" parent="SwordHitbox" unique_id=374696994]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_sword")
+shape = SubResource("RectangleShape2D_sword")
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=1367817738]
 stream = ExtResource("5_g75l7")

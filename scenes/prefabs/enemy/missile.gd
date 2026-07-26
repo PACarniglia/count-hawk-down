@@ -6,10 +6,12 @@ const MISSILE_LAUNCH_SFX: AudioStream = preload("res://sounds/sfx/enemies/missil
 @export var turn_speed: float = 2.8
 @export var lifetime: float = 4.0
 @export var launch_direction: Vector2 = Vector2.UP
+@export var reflected_speed_multiplier: float = 1.8
 
 var _velocity: Vector2 = Vector2.ZERO
 var _lifetime_timer: float = 0.0
 var _player: Node2D = null
+var _is_reflected: bool = false
 
 
 func _ready() -> void:
@@ -32,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 
-	if is_instance_valid(_player):
+	if not _is_reflected and is_instance_valid(_player):
 		var desired := global_position.direction_to(_player.global_position) * speed
 		_velocity = _velocity.move_toward(desired, turn_speed * speed * delta)
 
@@ -42,7 +44,30 @@ func _physics_process(delta: float) -> void:
 	rotation = _velocity.angle() + PI
 
 
+func reflect_from_player(player_position: Vector2, mouse_position: Vector2) -> void:
+	_is_reflected = true
+	var reflected_direction := player_position.direction_to(mouse_position)
+	if reflected_direction == Vector2.ZERO:
+		reflected_direction = _velocity.normalized()
+	if reflected_direction == Vector2.ZERO:
+		reflected_direction = Vector2.RIGHT
+	_velocity = reflected_direction * speed * reflected_speed_multiplier
+
+
 func _on_body_entered(body: Node) -> void:
+	if _is_reflected:
+		if body.is_in_group("enemy"):
+			if body.has_method("die"):
+				body.die()
+			elif body.has_method("take_damage"):
+				body.take_damage(1)
+			queue_free()
+			return
+		if body.is_in_group("player"):
+			return
+		queue_free()
+		return
+
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
 			body.take_damage()
